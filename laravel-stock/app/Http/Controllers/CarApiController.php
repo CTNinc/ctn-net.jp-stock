@@ -118,6 +118,20 @@ class CarApiController extends Controller
         ];
 
         // 排気量排序はAPIでサポートされていないため、ローカルで処理
+        // 乗車定員検索もAPIでサポートされていない可能性があるため、ローカルで処理
+        $hasPassengerCapacitySearch = false;
+        $passengerCapacityMin = $request->input('passenger_capacity_min');
+        $passengerCapacityMax = $request->input('passenger_capacity_max');
+        
+        if (!empty($passengerCapacityMin) || !empty($passengerCapacityMax)) {
+            $hasPassengerCapacitySearch = true;
+            // API不支持passenger_capacity筛选，删除无效参数
+            unset($params['search[passenger_capacity_min]']);
+            unset($params['search[passenger_capacity_max]']);
+            // 乘車定員筛选时，获取更多数据进行筛选
+            $params['rowsPerPage'] = 2000; // 获取足够多的数据进行本地筛选
+        }
+        
         if (isset($sortMapping[$sort]) && !in_array($sort, ['cc_low', 'cc_high'])) {
             $params = array_merge($params, $sortMapping[$sort]);
         }
@@ -138,7 +152,81 @@ class CarApiController extends Controller
         $meta = $response['data']['meta'] ?? null;
         $vehicleCount = $meta['total'] ?? count($vehicles);
 
-        // 5. ローカル排序処理
+        // 5. ローカル筛选処理（乗車定員）
+        if ($hasPassengerCapacitySearch) {
+            // 全体車両のpassenger_capacity統計をチェック
+            $capacityStats = [];
+            $totalNull = 0;
+            $totalValid = 0;
+            $capacityValues = [];
+            
+            foreach ($vehicles as $vehicle) {
+                $capacity = $vehicle['passenger_capacity'] ?? null;
+                if (is_null($capacity)) {
+                    $totalNull++;
+                } else {
+                    $totalValid++;
+                    $capacityValues[] = $capacity;
+                }
+            }
+            
+            $capacitySample = [];
+            foreach (array_slice($vehicles, 0, 10) as $i => $vehicle) {
+                $capacitySample["vehicle_$i"] = $vehicle['passenger_capacity'] ?? 'null';
+            }
+            
+            \Log::info('Passenger capacity filtering', [
+                'min' => $passengerCapacityMin,
+                'max' => $passengerCapacityMax,
+                'total_vehicles_before' => count($vehicles),
+                'total_null_capacity' => $totalNull,
+                'total_valid_capacity' => $totalValid,
+                'capacity_values' => array_count_values($capacityValues),
+                'sample_capacities' => $capacitySample
+            ]);
+            
+            $nullCount = 0;
+            $validCount = 0;
+            
+            $vehicles = array_filter($vehicles, function ($vehicle) use ($passengerCapacityMin, $passengerCapacityMax, &$nullCount, &$validCount) {
+                $capacity = $vehicle['passenger_capacity'] ?? null;
+                
+                // passenger_capacityがnullの場合はスキップ
+                if (is_null($capacity)) {
+                    $nullCount++;
+                    return false;
+                }
+                
+                $validCount++;
+                $passMin = empty($passengerCapacityMin) || $capacity >= (int)$passengerCapacityMin;
+                $passMax = empty($passengerCapacityMax) || $capacity <= (int)$passengerCapacityMax;
+                
+
+                
+                return $passMin && $passMax;
+            });
+            
+            $vehicles = array_values($vehicles); // 重新索引数组
+            
+            \Log::info('Passenger capacity filtering result', [
+                'total_vehicles_after' => count($vehicles),
+                'null_count' => $nullCount,
+                'valid_count' => $validCount
+            ]);
+            
+            // 筛选後のメタ情報を更新
+            if ($meta) {
+                $meta['total'] = count($vehicles);
+                $meta['per_page'] = count($vehicles);
+                $meta['current_page'] = 1;
+                $meta['last_page'] = 1;
+                $meta['from'] = count($vehicles) > 0 ? 1 : 0;
+                $meta['to'] = count($vehicles);
+            }
+            $vehicleCount = count($vehicles);
+        }
+
+        // 6. ローカル排序処理
         if ($sort === 'year_new_created') {
             // デフォルト排序：年式＋入庫日
             $vehicles = collect($vehicles)->sortBy([
@@ -248,23 +336,61 @@ class CarApiController extends Controller
         }
     }
 
+
+
     public function makerModels($makerId)
     {
-        // URLエンコードされたメーカー名をデコード
-        $decodedMakerId = urldecode($makerId);
+        // 英文别名を日文制造商名に変換
+        $japaneseMakerName = \App\Helpers\MakerHelper::toJapanese($makerId);
         
         // まずキャッシュファイルから読み取りを試行
-        $models = $this->getMakerModelsFromCache($decodedMakerId);
+        $models = $this->getMakerModelsFromCache($japaneseMakerName);
         
         // キャッシュが利用できない場合は従来の方法を使用
         if (empty($models) || (count($models) === 1 && strpos($models[0]['name'], 'データ読み込み中') !== false)) {
-            $models = $this->getMakerModelsFromLegacyMethod($decodedMakerId);
+            $models = $this->getMakerModelsFromLegacyMethod($japaneseMakerName);
         }
 
         return view('cars.maker.models', [
-            'makerId' => $decodedMakerId,
+            'makerId' => $japaneseMakerName,
             'models' => $models,
         ]);
+    }
+
+    /**
+     * 英文别名を日文制造商名に変換（フォールバック用）
+     */
+    private function convertToJapanese($englishName)
+    {
+        // まずMakerHelperを試す
+        try {
+            if (class_exists('\App\Helpers\MakerHelper')) {
+                return \App\Helpers\MakerHelper::toJapanese($englishName);
+            }
+        } catch (\Exception $e) {
+            \Log::warning('MakerHelper not available, using fallback', ['error' => $e->getMessage()]);
+        }
+        
+        // フォールバック：基本的なマッピング
+        $basicMapping = [
+            'honda' => 'ホンダ',
+            'toyota' => 'トヨタ',
+            'nissan' => '日産',
+            'mazda' => 'マツダ',
+            'subaru' => 'スバル',
+            'suzuki' => 'スズキ',
+            'mitsubishi' => '三菱',
+            'daihatsu' => 'ダイハツ',
+            'lexus' => 'レクサス',
+            'bmw' => 'BMW',
+            'mercedes-benz' => 'メルセデス・ベンツ',
+            'audi' => 'アウディ',
+            'volkswagen' => 'フォルクスワーゲン',
+            'porsche' => 'ポルシェ',
+            'tesla' => 'テスラ',
+        ];
+        
+        return $basicMapping[$englishName] ?? $englishName;
     }
 
     /**

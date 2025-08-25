@@ -695,8 +695,9 @@ class CarController extends Controller
         $makerUrls = [];
         foreach (collect($makersByCountry)->flatten() as $maker) {
             $count = $counts[$maker] ?? 0;
+            $englishName = \App\Helpers\MakerHelper::toEnglish($maker);
             $makerUrls[$maker] = [
-                'url' => $count > 0 ? route('cars.maker.models', ['maker' => urlencode($maker)]) : 'javascript:void(0)',
+                'url' => $count > 0 ? url('/cars/maker/' . $englishName) : 'javascript:void(0)',
                 'class' => $count > 0 ? '' : 'disabled',
                 'count' => $count
             ];

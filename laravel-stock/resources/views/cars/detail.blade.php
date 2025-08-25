@@ -748,7 +748,7 @@
             'アストンマーティン' => 'astonmartin', 'ミニ' => 'mini', 'ルノー' => 'renault', 'プジョー' => 'peugeot', 'シトロエン' => 'citroen'
             ] as $makerName => $fileName)
             <li>
-              <a href="{{ route('cars.maker.models', ['maker' => $makerName]) }}">
+                              <a href="{{ url('/cars/maker/' . urlencode($makerName)) }}">
                 {{ $makerName }}
               </a>
             </li>

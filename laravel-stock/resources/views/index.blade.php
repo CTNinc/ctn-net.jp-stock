@@ -353,7 +353,7 @@
                 'スバル' => 'subaru', 'スズキ' => 'suzuki', '三菱' => 'mitsubishi', 'ダイハツ' => 'daihatsu',
                 'レクサス' => 'lexus'
                 ] as $makerName => $fileName)
-                <a href="{{ route('cars.maker.models', ['maker' => $makerName]) }}" class="maker-class-item" style="display: inline-block; text-align:center; margin:10px;">
+                <a href="{{ url('/cars/maker/' . $fileName) }}" class="maker-class-item" style="display: inline-block; text-align:center; margin:10px;">
                   <div class="maker-logo">
                     <img src="{{ asset('assets/img/maker-logo/maker-logo-' . $fileName . '.png') }}" alt="{{ $makerName }}">
                   </div>
@@ -383,7 +383,7 @@
               'ジープ' => 'jeep',
               'フェラーリ' => 'ferrari'
               ] as $makerName => $fileName)
-              <a href="{{ route('cars.maker.models', ['maker' => $makerName]) }}" class="maker-class-item" style="display: inline-block; text-align:center;">
+              <a href="{{ url('/cars/maker/' . $fileName) }}" class="maker-class-item" style="display: inline-block; text-align:center;">
                 <div class="maker-logo">
                   <img src="{{ asset('assets/img/maker-logo/maker-logo-' . $fileName . '.png') }}" alt="{{ $makerName }}" loading="lazy">
                 </div>
