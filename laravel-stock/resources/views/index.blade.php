@@ -697,7 +697,7 @@
                 @endphp
 
                 <div class="commons-image">
-                  {{-- 7天内显示NEW+日期，7天外只显示日期 --}}
+                  {{-- 7日以内のNEW+日付を表示し、7日外の日付のみ表示します --}}
                   @if (!empty($vehicle['created_at']))
                     @php
                     $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
@@ -778,6 +778,243 @@
 
         <a href="{{ route('cars.index', ['sort' => 'new_arrival']) }}" class="btn btn-primary">
           <span>新着中古車両をもっと見る</span>
+          <img src="{{ asset('assets/img/circle-arrow-right.svg') }}" alt="">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ★閲覧履歴セクション -->
+  <section class="commons-section">
+    <div class="inner_pt1">
+      <div class="commons-title">
+        <img src="{{ asset('assets/img/icon_heading_top_history.svg') }}" alt="閲覧履歴アイコン">
+        <h2>閲覧履歴</h2>
+      </div>
+      <p class="commons-desc">最近見た車両をチェック！気になった車両をもう一度確認できます。</p>
+      <div class="commons-cards">
+        <div class="swiper commons-swiper">
+          @if(count($historyVehicles) > 0)
+          <div class="swiper-wrapper">
+            @foreach($historyVehicles as $vehicle)
+            <div class="swiper-slide">
+              <a href="{{ url('cars/detail/' . $vehicle['id']) }}" class="commons-card"
+                onclick="addToRecentlyViewed('{{ $vehicle['id'] }}')">
+                @php
+                $mainImage = null;
+
+                if (!empty($vehicle['images'])) {
+                foreach ($vehicle['images'] as $img) {
+                if (strpos($img['image_url'], '_01.jpg') !== false) {
+                $mainImage = $img['image_url'];
+                break;
+                }
+                }
+                }
+                @endphp
+
+                <div class="commons-image">
+                  {{-- 閲覧履歴は日付のみ表示 --}}
+                  @if (!empty($vehicle['created_at']))
+                    @php
+                    $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
+                    @endphp
+                    
+                    <div class="new-badge date-only">
+                      <span class="new-date">{{ $createdDate->format('n/j') }}</span>
+                    </div>
+                  @endif
+                  <img src="{{ $mainImage ?? asset('assets/img/test.png') }}" alt="" loading="lazy">
+                </div>
+                <div class="commons-info">
+                  <div class="maker-heading">
+                    <p class="maker">{{ $vehicle['manufacturer_name'] }}</p>
+                  </div>
+                  <p class="car-name">{{ $vehicle['car_model_name'] }} {{ $vehicle['grade_name'] ?? '' }}</p>
+                  <p class="info-line price">
+                    <span class="label">車両価格</span>
+                    <span class="value">{{ number_format(($vehicle['price_incl_tax'] ?? 0) / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  <p class="info-line price">
+                    @php
+                    $miscFees = (intval($vehicle['total_payment'] ?? 0)) - (intval($vehicle['price_incl_tax'] ?? 0));
+                    @endphp
+                    <span class="label">諸費用</span>
+                    <span class="value">{{ number_format($miscFees / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  <p class="info-line total">
+                    <span class="label">支払総額</span>
+                    <span class="value">{{ number_format(($vehicle['total_payment'] ?? 0) / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  @php
+                  $carbonDate = \Carbon\Carbon::parse($vehicle['first_registration_at']);
+                  $year = $carbonDate->format('Y年');
+                  $wareki = toWareki($carbonDate->year);
+                  @endphp
+                  <p class="info-line year">
+                    <span class="label">年式</span>
+                    <span class="value">{{ $year ?? '-' }}</span>
+                    <span class="unit">{{ $wareki }}</span>
+                  </p>
+                  <p class="info-line distance">
+                    <span class="label">走行距離</span>
+                    <span class="value">{{ number_format($vehicle['mileage'] ?? 0) }}</span>
+                    <span class="unit">km</span>
+                  </p>
+                  <p class="info-line shop">
+                    <span class="value">
+                      @if(isset($vehicle['dealer']['name']) && $vehicle['dealer']['name'])
+                      {{ $vehicle['dealer']['name'] }}
+                      @elseif(isset($vehicle['dealer']['store_id']))
+                      店舗ID: {{ $vehicle['dealer']['store_id'] }}
+                      @else
+                      販売店情報取得中
+                      @endif
+                    </span>
+                  </p>
+                </div>
+              </a>
+            </div>
+            @endforeach
+          </div>
+          @else
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="commons-card" style="text-align: center; padding: 40px;">
+                <p>閲覧履歴がありません</p>
+              </div>
+            </div>
+          </div>
+          @endif
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <div class="more-commons-link">
+        <a href="{{ route('cars.index') }}" class="btn btn-primary">
+          <span>閲覧履歴をもっと見る</span>
+          <img src="{{ asset('assets/img/circle-arrow-right.svg') }}" alt="">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ★おすすめ車両セクション -->
+  <section class="commons-section">
+    <div class="inner_pt1">
+      <div class="commons-title">
+        <img src="{{ asset('assets/img/icon_heading_top_recommend.svg') }}" alt="おすすめ車両アイコン">
+        <h2>おすすめ車両</h2>
+      </div>
+      <p class="commons-desc">あなたにぴったりの車両をセレクト！特選車両をご紹介します。</p>
+      <div class="commons-cards">
+        <div class="swiper commons-swiper">
+          @if(count($recommendedVehicles) > 0)
+          <div class="swiper-wrapper">
+            @foreach($recommendedVehicles as $vehicle)
+            <div class="swiper-slide">
+              <a href="{{ url('cars/detail/' . $vehicle['id']) }}" class="commons-card"
+                onclick="addToRecentlyViewed('{{ $vehicle['id'] }}')">
+                @php
+                $mainImage = null;
+
+                if (!empty($vehicle['images'])) {
+                foreach ($vehicle['images'] as $img) {
+                if (strpos($img['image_url'], '_01.jpg') !== false) {
+                $mainImage = $img['image_url'];
+                break;
+                }
+                }
+                }
+                @endphp
+
+                <div class="commons-image">
+                  {{-- おすすめ車両は「おすすめ」ラベル付きで表示 --}}
+                  @if (!empty($vehicle['created_at']))
+                    @php
+                    $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
+                    @endphp
+                    
+                    <div class="new-badge with-new">
+                      <span class="new-text">おすすめ</span>
+                      <span class="new-date">{{ $createdDate->format('n/j') }}</span>
+                    </div>
+                  @endif
+                  <img src="{{ $mainImage ?? asset('assets/img/test.png') }}" alt="" loading="lazy">
+                </div>
+                <div class="commons-info">
+                  <div class="maker-heading">
+                    <p class="maker">{{ $vehicle['manufacturer_name'] }}</p>
+                  </div>
+                  <p class="car-name">{{ $vehicle['car_model_name'] }} {{ $vehicle['grade_name'] ?? '' }}</p>
+                  <p class="info-line price">
+                    <span class="label">車両価格</span>
+                    <span class="value">{{ number_format(($vehicle['price_incl_tax'] ?? 0) / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  <p class="info-line price">
+                    @php
+                    $miscFees = (intval($vehicle['total_payment'] ?? 0)) - (intval($vehicle['price_incl_tax'] ?? 0));
+                    @endphp
+                    <span class="label">諸費用</span>
+                    <span class="value">{{ number_format($miscFees / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  <p class="info-line total">
+                    <span class="label">支払総額</span>
+                    <span class="value">{{ number_format(($vehicle['total_payment'] ?? 0) / 10000, 1) }}</span>
+                    <span class="unit">万円</span>
+                  </p>
+                  @php
+                  $carbonDate = \Carbon\Carbon::parse($vehicle['first_registration_at']);
+                  $year = $carbonDate->format('Y年');
+                  $wareki = toWareki($carbonDate->year);
+                  @endphp
+                  <p class="info-line year">
+                    <span class="label">年式</span>
+                    <span class="value">{{ $year ?? '-' }}</span>
+                    <span class="unit">{{ $wareki }}</span>
+                  </p>
+                  <p class="info-line distance">
+                    <span class="label">走行距離</span>
+                    <span class="value">{{ number_format($vehicle['mileage'] ?? 0) }}</span>
+                    <span class="unit">km</span>
+                  </p>
+                  <p class="info-line shop">
+                    <span class="value">
+                      @if(isset($vehicle['dealer']['name']) && $vehicle['dealer']['name'])
+                      {{ $vehicle['dealer']['name'] }}
+                      @elseif(isset($vehicle['dealer']['store_id']))
+                      店舗ID: {{ $vehicle['dealer']['store_id'] }}
+                      @else
+                      販売店情報取得中
+                      @endif
+                    </span>
+                  </p>
+                </div>
+              </a>
+            </div>
+            @endforeach
+          </div>
+          @else
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="commons-card" style="text-align: center; padding: 40px;">
+                <p>おすすめ車両がありません</p>
+              </div>
+            </div>
+          </div>
+          @endif
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <div class="more-commons-link">
+        <a href="{{ route('cars.index') }}" class="btn btn-primary">
+          <span>おすすめ車両をもっと見る</span>
           <img src="{{ asset('assets/img/circle-arrow-right.svg') }}" alt="">
         </a>
       </div>

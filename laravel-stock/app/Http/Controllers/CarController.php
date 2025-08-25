@@ -124,14 +124,65 @@ class CarController extends Controller
         return $newsList;
     }
 
+    /**
+     * 閲覧履歴用の車両データを取得（4台）
+     */
+    private function getHistoryVehicles()
+    {
+        $params = [
+            'rowsPerPage' => 4,
+            'page' => 1,
+            'sortBy' => 'created_at',
+            'descending' => true
+        ];
+
+        $api = new VehicleApiService();
+        $response = $api->getVehicleList($params);
+        
+        return $response['data']['data'] ?? [];
+    }
+
+    /**
+     * おすすめ車両用のデータを取得（4台）
+     * 当前年份の車両で価格が安い順に取得
+     */
+    private function getRecommendedVehicles()
+    {
+        $currentYear = date('Y'); // 2025
+        
+        $params = [
+            'rowsPerPage' => 4,
+            'page' => 1,
+            'sortBy' => 'price_incl_tax',
+            'descending' => false, // 最安順
+            // 当前年份の車両のみ
+            'search[year_min]' => $currentYear,
+            'search[year_max]' => $currentYear,
+        ];
+
+        $api = new VehicleApiService();
+        $response = $api->getVehicleList($params);
+        
+        return $response['data']['data'] ?? [];
+    }
+
     public function index(Request $request)
     {
-        $vehicleData = $this->getVehicleData($request); // ← ここで受け取る
+        // ホームページのみ: 8台の車両を表示するように設定
+        $request->merge(['per_page' => 8]);
+        $vehicleData = $this->getVehicleData($request); // ← 新着中古車両用
         $newsList = $this->getNewsList();
-
+        
+        // 閲覧履歴用データ（4台）
+        $historyVehicles = $this->getHistoryVehicles();
+        
+        // おすすめ車両用データ（4台）
+        $recommendedVehicles = $this->getRecommendedVehicles();
 
         return view('index', [
             'vehicles' => $vehicleData['vehicles'],
+            'historyVehicles' => $historyVehicles,
+            'recommendedVehicles' => $recommendedVehicles,
             'newsList' => $newsList,
         ]);
     }
