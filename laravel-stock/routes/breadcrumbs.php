@@ -56,8 +56,14 @@ Breadcrumbs::for('privacypolicy', function (Trail $trail) {
 });
 
 
+// メーカー一覧
+Breadcrumbs::for('cars.makerlist', function (Trail $trail) {
+    $trail->parent('cars.index');
+    $trail->push('メーカー一覧', route('cars.makerlist'));
+});
+
 // メーカー別車種一覧（例：トヨタ）
 Breadcrumbs::for('cars.maker', function (Trail $trail, $makerName) {
-    $trail->parent('cars.index');
+    $trail->parent('cars.makerlist');
     $trail->push($makerName, route('cars.maker.models', ['maker' => $makerName])); // 該当品牌の車種一覧ページへリンク
 });

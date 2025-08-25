@@ -3,6 +3,7 @@
 @section('title', $makerId . 'の車種一覧｜中古車の最安値検索は【CTN中古車販売】')
 
 @section('content')
+{{ Breadcrumbs::render('cars.maker', $makerId) }}
 
 <link rel="stylesheet" href="{{ asset('assets/css/maker-models.css') }}">
 <link rel="stylesheet" href="{{('/assets/css/index.css') }}">

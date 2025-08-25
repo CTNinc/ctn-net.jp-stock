@@ -3,6 +3,7 @@
 @section('title', 'メーカーから最安値を探す｜中古車の最安値検索は【CTN中古車販売】')
 
 @section('content')
+{{ Breadcrumbs::render('cars.makerlist') }}
 <link rel="stylesheet" href="{{ asset('assets/css/makerlist.css') }}">
 
   <link rel="icon" type="image/x-icon" href="https://ctn-net.jp/wp-content/themes/ctncoporation/common/images/favicon.ico?20220226">
