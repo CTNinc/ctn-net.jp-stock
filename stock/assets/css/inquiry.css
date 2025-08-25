@@ -1,0 +1,396 @@
+.inquiry-container {
+    max-width: 960px;
+    margin: auto;
+    padding: 2rem;
+    font-family: sans-serif;
+}
+.inquiry-container.main {
+    max-width: 1280px;
+    width: 100%;
+    margin-top: 0;
+}
+
+.step-progress {
+    display: flex;
+    width: 100%;
+    margin: 20px 0;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.step {
+    flex: 1;
+    background-color: #ccc;
+    color: #000;
+    padding: 12px 0;
+    position: relative;
+}
+
+.step:first-child::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: -23px;
+    width: 0;
+    height: 0;
+    border-top: 22px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 24px solid #ea5413;
+    z-index: 2;
+}
+.step.confirm_first {
+    background-color: #eee;
+}
+.step.confirm_first::after {
+    border-left: 24px solid #eee;
+}
+
+.step:last-child::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 22px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 24px solid #dcdcdc;
+    z-index: 1;
+}
+.step:nth-child(2) {
+    background-color: #dddddd;
+}
+.step.current {
+    background-color: #ea5413;
+    color: white;
+}
+.step.confirm_second::before {
+    border-top: 23px solid transparent;
+    border-left: 24px solid #ea5413;
+}
+.car-info {
+    max-width: 525px;
+    margin-right: 1%;
+}
+.car-info h3 {
+    background: #ea5413;
+    color: white;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.car-detail {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.car-image {
+    width: 150px;
+    height: 100px;
+    background: #ccc;
+}
+
+.car-specs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.car-specs p {
+    margin: 4px 0;
+}
+
+.highlight {
+    color: #ea5413;
+    font-weight: bold;
+}
+
+.form-section {
+    background: #fff;
+    padding: 0 20px 20px 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    row-gap: 15px;
+    column-gap: 20px;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label.required span {
+    background-color: #ea5413;
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.submit-area {
+    margin-top: 30px;
+    text-align: center;
+}
+.submit-area button {
+    background: #ea5413;
+    color: white;
+    padding: 12px 40px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+.confirm-table {
+    width: 100%;
+    min-width: 677px;
+    border-collapse: collapse;
+}
+
+.confirm-table th,
+.confirm-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.confirm-table th {
+    background-color: #f4f4f4;
+    width: 200px;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.confirm-buttons .confirm {
+    background: #ea5413;
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.confirm-buttons .back {
+    background: #888;
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.thanks-message {
+    text-align: center;
+    border-radius: 8px;
+    min-width: 700px;
+}
+
+.thanks-message h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.thanks-message p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+    padding-left: 9%;
+}
+
+.return-link {
+    margin-top: 30px;
+}
+
+.return-link a {
+    background: #ea5413;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.hidden {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+.thanks-message .attention {
+    color: #ea5413;
+    font-size: 12px;
+}
+.inquiry-container .column{
+    flex-direction: initial;
+    font-size: 16px;
+}
+.inquiry-container .column > div{
+    display: block;
+}
+@media screen and (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+        font-size: 12px;
+    }
+    .label {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+    .car-detail {
+        padding: 0px;
+        margin-bottom: 15px;
+    }
+    .form-section {
+        padding: 30px 0 0 0;
+    }
+    .label.required span {
+        font-size: 10px;
+    }
+    .submit-area button {
+        width: 100%;
+    }
+    .label.hidden {
+        margin-top: 0;
+    }
+    .sp-carname {
+        font-weight: bold;
+        margin-bottom: 20px;
+        line-height: 1.5;
+        font-size: 13px;
+    }
+    /* 確認画面 */
+    .confirm-table {
+        min-width: auto;
+    }
+    .confirm-table tr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .confirm-table th,
+    .confirm-table td {
+        border: none;
+    }
+    .confirm-table th {
+        width: 100%;
+        font-weight: normal;
+        border-top: 1px solid #eeeeee;
+    }
+    .confirm-buttons .back {
+        border-radius: 10px;
+        text-align: center;
+        width: 51%;
+        margin: 0 auto;
+    }
+    .step {
+        font-size: 12px;
+    }
+    .step.confirm_second::before {
+        border-top: 22px solid transparent;
+        border-left: 15px solid #ea5413;
+        border-bottom: 20px solid transparent;
+    }
+    .step:first-child::after {
+        right: -23px;
+        border-top: 18px solid transparent;
+        border-bottom: 24px solid transparent;
+        border-left: 24px solid #ea5413;
+    }
+    .step:last-child::before {
+        border-top: 18px solid transparent;
+        border-bottom: 24px solid transparent;
+        border-left: 24px solid #dcdcdc;
+    }
+    .step.confirm_first::after {
+        border-left: 15px solid #eee;
+    }
+    .car-info h3 {
+        padding: 8px 8px 8px 16px;
+        font-size: 13px;
+    }
+    .thanks-message {
+        min-width: auto;
+    }
+    .thanks-message p {
+        padding-left: 0%;
+    }
+    .car-info.thanks {
+        margin-top: 65px;
+    }
+    .thanks-message h2 {
+        font-size: 18px;
+    }
+    .return-link a {
+        display: block;
+        width: 100%;
+    }
+        .inquiry-container .column{
+    flex-direction: column;
+}
+}
+
+/* 询价页NEW标志样式 */
+.car-image-section .new-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+    z-index: 2;
+    line-height: 1.2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* 7天内：橙色背景，显示NEW */
+.car-image-section .new-badge.with-new {
+    background-color: #ea5413;
+}
+
+/* 7天外：灰色背景，只显示日期 */
+.car-image-section .new-badge.date-only {
+    background-color: #666;
+}
+
+.car-image-section .new-badge .new-text {
+    display: block;
+    font-size: 11px;
+    margin-bottom: 1px;
+}
+
+.car-image-section .new-badge .new-date {
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+}

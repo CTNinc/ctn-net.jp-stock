@@ -1,0 +1,163 @@
+.makerlist-wrapper {
+    max-width: 1020px;
+    margin: 7rem auto 0 auto;
+    padding: 2rem 0;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.country-section {
+    margin-top: -3rem;
+    padding-top: 6rem;
+    margin-bottom: 2rem;
+}
+
+.country-heading {
+    font-size: 1rem;
+    display: flex;
+    font-weight: 500;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.country-heading img {
+    margin-right: 0.5rem;
+}
+
+.maker-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem 1rem;
+}
+
+.maker-list li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+.maker-list li a {
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.count {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.maker-list li a:hover,
+.maker-list li a:hover .count {
+    color: #ea5413;
+}
+.sp-country-nav {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .maker-list {
+        display: block;
+    }
+
+    .maker-list li {
+        position: relative;
+        border-top: 1px solid #ddd;
+    }
+
+    .maker-list li:last-child {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .maker-list a {
+        display: block;
+        position: relative;
+        padding: 0.75rem 0rem;
+        text-decoration: none;
+        color: #000;
+        font-size: 1rem;
+    }
+
+    .maker-list a::before,
+    .maker-list a::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 2px);
+        right: 1rem;
+        width: 6px;
+        height: 1px;
+        border-radius: 9999px;
+        background-color: #ea5413;
+        transform-origin: 100% 50%;
+    }
+
+    .maker-list a::before {
+        transform: rotate(45deg);
+    }
+
+    .maker-list a::after {
+        transform: rotate(-45deg);
+    }
+
+    .maker-list .count {
+        font-size: 0.85rem;
+        color: #888;
+        margin-left: 0.5rem;
+    }
+      .sp-country-nav {
+    display: block;
+    margin: 1.5rem 0;
+    padding: 0;
+  }
+
+  .sp-country-nav-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .sp-country-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+  }
+
+  .sp-country-scroll a {
+    flex: 0 0 auto;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+  }
+
+  .sp-country-scroll a img {
+    width: 36px;
+    height: 24px;
+    object-fit: cover;
+    margin-bottom: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .sp-country-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .sp-country-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+}

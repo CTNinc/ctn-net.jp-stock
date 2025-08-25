@@ -1,0 +1,118 @@
+/* 利用規約ページ */
+
+.policy-terms__section {
+  padding:0px 16px;
+  margin-top: 80px;
+margin-bottom: 80px;
+}
+.policy-terms-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+.policy-terms-content {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #000;
+}
+.policy-terms-content h3 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.policy-terms-content p {
+  margin-bottom: 20px;
+}
+.policy-terms-content ul {
+  padding-left: 1.5em;
+  list-style-type: disc;
+  margin-bottom: 20px;
+}
+.policy-terms-content li {
+  margin-bottom: 6px;
+}
+
+
+
+.inner_pt1 {
+    max-width: 1020px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* CTN車販売について */
+.pagetop-section {
+  background-color: #EA5413;
+  /* padding: 64px 0; */
+  position: relative;
+}
+.about__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+}
+.about__image {
+  width: 50%;
+  height: auto;
+}
+.about__image img {
+  width: 100%;
+}
+.about__text {
+  width: 50%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.about__text h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 160%;
+}
+.about__text p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 160%;
+}
+.pagetop {
+  position: absolute;
+  top: -40px;
+  left: 40%;
+  transform: translateX(437px); /* X位置指定 */
+  background-color: #EA5413;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 24px;
+  height: 40px;
+  border-radius: 4px 4px 0 0;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.pagetop:hover {
+  background-color: #EA5413;
+  color: #fff;
+}
+@media screen and (max-width: 1280px) {
+  .pagetop { /* X位置指定 TODO*/
+    transform: translateX(50vw - 600px);
+  }
+}
+@media screen and (max-width: 768px) {
+  .pagetop { /* X位置指定 TODO*/
+    position: static;
+    margin: 24px auto 0;
+    transform: none;
+  }
+}

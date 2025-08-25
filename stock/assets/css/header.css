@@ -1,0 +1,127 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+}
+.header-inner {
+  position: relative; /* 必須 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+.header-logo img {
+  height: 34px;
+}
+.header-logo {
+  max-width: 127px;
+}
+
+/* メニュー */
+.header-nav {
+  margin-top: 12px;
+}
+.header-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item a {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 12px;
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.menu-item a::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* ホバー時：文字・下線ともにオレンジ */
+.menu-item a:hover {
+  color: #ea5413;
+}
+.menu-item a:hover::after {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background-color: #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  content: "";
+  position: absolute;
+  background-color: #ea5413;
+}
+
+/* アクティブ状態（JSで付与） */
+.menu-item.active a {
+  color: #000; /* 初期は黒のまま */
+}
+.menu-item.active a::after {
+  background-color: #ea5413;
+}
+
+/* お役立ちコラムメニューに下線なし */
+.menu-item.no-underline a::after {
+  display: none;
+}
+.menu-item.no-underline a:hover {
+  color: #ea5413;
+}
+
+.menu-separator {
+  /* 区切り線 */
+  width: 1px;
+  height: 16px;
+  background-color: #000;
+  margin: -8px 8px 0;
+}
+
+/* スマホ非表示 */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 26px;
+  }
+  .header-menu {
+    display: none;
+  }
+  .header-inner {
+    justify-content: normal;
+  }
+  .lower_layer {
+    background: #f6f6f6;
+  }
+  .search_old_car {
+    color: #ea5413;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-left: 10px;
+  }
+}

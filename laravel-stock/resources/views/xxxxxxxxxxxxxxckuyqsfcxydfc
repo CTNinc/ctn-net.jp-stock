@@ -1,0 +1,81 @@
+          <!-- カード（1〜8位）をループで生成（最少最大8カード表示） -->
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge rank-1">1</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア1</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge rank-2">2</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア2</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge rank-3">3</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア3</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge-other">4</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア4</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge-other">5</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア5</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge-other">6</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア6</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge-other">7</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア7</strong>
+            </div>
+          </div>
+          <div class="ranking-maker-card">
+            <span class="rank-maker-badge-other">8</span>
+            <div class="car-maker-image">
+              <img src="{{ asset('assets/img/test.png') }}" alt="メーカー別車両ランキング画像">
+            </div>
+            <div class="car-maker-info">
+              スズキ<br>
+              <strong>スペーシア8</strong>
+            </div>
+          </div>

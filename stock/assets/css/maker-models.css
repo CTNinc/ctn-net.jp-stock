@@ -1,0 +1,249 @@
+h1 {
+    font-weight: 400;
+}
+
+.makerlist-wrapper {
+    max-width: 1020px;
+    margin: 7rem auto 0 auto;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.maker-models-page {
+    padding: 24px;
+    font-family: "Noto Sans JP", sans-serif;
+    color: #222;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.header-actions {
+    text-align: right;
+    margin-bottom: 20px;
+    width: 29%;
+    margin: 0 0 0 auto;
+}
+
+.search-btn {
+    background-color: #ea5413;
+    color: #fff;
+    padding: 10px 16px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.search-btn:hover:not(:disabled) {
+    background-color: #d44a0f;
+}
+
+.view-all-link {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: none;
+    text-indent: -9999px; /* テキスト非表示 */
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    position: relative;
+}
+.view-all-link::before {
+    position: absolute;
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-image: url("/assets/img/circle-arrow-right-orange.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: -225px;
+    top: 6px;
+}
+
+.kana-filter {
+    background-color: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.kana-filter ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+}
+.kana-filter ul li {
+    list-style: none;
+}
+
+.kana-filter a {
+    position: relative;
+    display: inline-block;
+    padding-right: 14px;
+    text-decoration: none;
+    color: #333;
+}
+
+.kana-filter a::before,
+.kana-filter a::after {
+    content: "";
+    position: absolute;
+    top: calc(70% - 2px);
+    right: 0;
+    width: 6px;
+    height: 1px;
+    border-radius: 9999px;
+    background-color: #ea5413;
+    transform-origin: right center;
+}
+.kana-filter a::before {
+    transform: rotate(135deg);
+}
+
+.kana-filter a::after {
+    transform: rotate(45deg);
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.section-title span {
+    color: #d9d9d9;
+}
+
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(194px, 1fr));
+    gap: 16px;
+    margin-top: 50px;
+}
+
+.model-card {
+    text-align: center;
+}
+
+.model-card img {
+    width: 100%;
+    height: auto;
+}
+
+.model-name {
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+input[type="checkbox"] {
+    margin-right: 4px;
+}
+
+hr {
+    margin: 50px 0;
+}
+@media screen and (max-width: 768px) {
+    .maker-models-page h1{
+        text-align: center;
+        font-size: 25px;
+        margin-top: 10px;
+    }
+    .model-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .model-card {
+        border-top: 1px solid #ddd;
+        padding: 8px 12px;
+        background: #fff;
+    }
+
+    .model-card label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .model-card img {
+        width: 80px;
+        height: auto;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .model-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        white-space: normal;
+        flex-grow: 1;
+        text-align: left;
+        padding-right: 31px;
+        justify-content: left;
+    }
+
+    .model-card label::before,
+    .model-card label::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 1px);
+        right: 8px;
+        width: 6px;
+        height: 1px;
+        border-radius: 9999px;
+        background-color: #ea5413;
+        transform-origin: 100% 50%;
+    }
+
+    .model-card label::before {
+        transform: rotate(45deg);
+    }
+
+    .model-card label::after {
+        transform: rotate(-45deg);
+    }
+
+    .model-name input[type="checkbox"] {
+        transform: scale(1.2);
+    }
+    .header-actions {
+        width: 100%;
+    }
+    .search-btn {
+        font-size: 12px;
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+    }
+    .maker-models-page {
+        padding: 0;
+    }
+    .makerlist-wrapper {
+        padding: 1rem;
+    }
+}

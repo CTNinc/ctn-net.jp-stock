@@ -1,0 +1,153 @@
+{
+    "トヨタ": [
+        { "maker": "トヨタ", "model": "プリウス", "image": "assets/img/cars/default/toyota/prius.webp" },
+        { "maker": "トヨタ", "model": "ヤリスクロス", "image": "assets/img/cars/default/toyota/yaris_cross.webp" },
+        { "maker": "トヨタ", "model": "ライズ", "image": "assets/img/cars/default/toyota/raize.webp" },
+        { "maker": "トヨタ", "model": "ヤリス", "image": "assets/img/cars/default/toyota/yaris.webp" },
+        { "maker": "トヨタ", "model": "ハリアー", "image": "assets/img/cars/default/toyota/harrier.webp" },
+        { "maker": "トヨタ", "model": "ノア", "image": "assets/img/cars/default/toyota/noah.webp" },
+        { "maker": "トヨタ", "model": "シエンタ", "image": "assets/img/cars/default/toyota/sienta.webp" },
+        { "maker": "トヨタ", "model": "RAV4", "image": "assets/img/cars/default/toyota/rav4.webp" }
+    ],
+    "日産": [
+        { "maker": "日産", "model": "ノート", "image": "assets/img/cars/default/nissan/note.webp" },
+        { "maker": "日産", "model": "セレナ", "image": "assets/img/cars/default/nissan/serena.webp" },
+        { "maker": "日産", "model": "エクストレイル", "image": "assets/img/cars/default/nissan/xtrail.webp" },
+        { "maker": "日産", "model": "キックス", "image": "assets/img/cars/default/nissan/kicks.webp" },
+        { "maker": "日産", "model": "フーガ", "image": "assets/img/cars/default/nissan/fuga.webp" },
+        { "maker": "日産", "model": "フェアレディZ", "image": "assets/img/cars/default/nissan/fairladyz.webp" },
+        { "maker": "日産", "model": "スカイライン", "image": "assets/img/cars/default/nissan/skyline.webp" },
+        { "maker": "日産", "model": "リーフ", "image": "assets/img/cars/default/nissan/leaf.webp" }
+    ],
+    "ホンダ": [
+        { "maker": "ホンダ", "model": "N-BOX", "image": "assets/img/cars/default/honda/nbox.webp" },
+        { "maker": "ホンダ", "model": "フリード", "image": "assets/img/cars/default/honda/freed.webp" },
+        { "maker": "ホンダ", "model": "ヴェゼル", "image": "assets/img/cars/default/honda/vezel.webp" },
+        { "maker": "ホンダ", "model": "ステップワゴン", "image": "assets/img/cars/default/honda/stepwgn.webp" },
+        { "maker": "ホンダ", "model": "フィット", "image": "assets/img/cars/default/honda/fit.webp" },
+        { "maker": "ホンダ", "model": "シビック", "image": "assets/img/cars/default/honda/civic.webp" },
+        { "maker": "ホンダ", "model": "N-WGN", "image": "assets/img/cars/default/honda/nwgn.webp" },
+        { "maker": "ホンダ", "model": "オデッセイ", "image": "assets/img/cars/default/honda/odyssey.webp" }
+    ],
+    "マツダ": [
+        { "maker": "マツダ", "model": "CX-5", "image": "assets/img/cars/default/mazda/cx5.webp" },
+        { "maker": "マツダ", "model": "マツダ3", "image": "assets/img/cars/default/mazda/mazda3.webp" },
+        { "maker": "マツダ", "model": "MAZDA CX-30", "image": "assets/img/cars/default/mazda/cx30.webp" },
+        { "maker": "マツダ", "model": "マツダ6", "image": "assets/img/cars/default/mazda/mazda6.webp" },
+        { "maker": "マツダ", "model": "ロードスター", "image": "assets/img/cars/default/mazda/roadster.webp" },
+        { "maker": "マツダ", "model": "CX-3", "image": "assets/img/cars/default/mazda/cx3.webp" },
+        { "maker": "マツダ", "model": "CX-8", "image": "assets/img/cars/default/mazda/cx8.webp" },
+        { "maker": "マツダ", "model": "マツダ2", "image": "assets/img/cars/default/mazda/mazda2.webp" }
+    ],
+    "スバル": [
+        { "maker": "スバル", "model": "レヴォーグ", "image": "assets/img/cars/default/subaru/levorg.webp" },
+        { "maker": "スバル", "model": "フォレスター", "image": "assets/img/cars/default/subaru/forester.webp" },
+        { "maker": "スバル", "model": "レガシィ アウトバック", "image": "assets/img/cars/default/subaru/outback.webp" },
+        { "maker": "スバル", "model": "インプレッサ", "image": "assets/img/cars/default/subaru/impreza.webp" },
+        { "maker": "スバル", "model": "XV", "image": "assets/img/cars/default/subaru/xv.webp" },
+        { "maker": "スバル", "model": "WRX S4", "image": "assets/img/cars/default/subaru/wrxs4.webp" },
+        { "maker": "スバル", "model": "BRZ", "image": "assets/img/cars/default/subaru/brz.webp" },
+        { "maker": "スバル", "model": "レックス", "image": "assets/img/cars/default/subaru/rex.webp" }
+    ],
+    "スズキ": [
+        { "maker": "スズキ", "model": "ハスラー", "image": "assets/img/cars/default/suzuki/hustler.webp" },
+        { "maker": "スズキ", "model": "スペーシア", "image": "assets/img/cars/default/suzuki/spacia.webp" },
+        { "maker": "スズキ", "model": "ワゴンR", "image": "assets/img/cars/default/suzuki/wagonr.webp" },
+        { "maker": "スズキ", "model": "ソリオ", "image": "assets/img/cars/default/suzuki/solio.webp" },
+        { "maker": "スズキ", "model": "エスクード", "image": "assets/img/cars/default/suzuki/escudo.webp" },
+        { "maker": "スズキ", "model": "ジムニー", "image": "assets/img/cars/default/suzuki/jimny.webp" },
+        { "maker": "スズキ", "model": "イグニス", "image": "assets/img/cars/default/suzuki/ignis.webp" },
+        { "maker": "スズキ", "model": "クロスビー", "image": "assets/img/cars/default/suzuki/xbee.webp" }
+    ],
+    "三菱": [
+        { "maker": "三菱", "model": "アウトランダー", "image": "assets/img/cars/default/mitsubishi/outlander.webp" },
+        { "maker": "三菱", "model": "ekワゴン", "image": "assets/img/cars/default/mitsubishi/ekwagon.webp" },
+        { "maker": "三菱", "model": "デリカD:5", "image": "assets/img/cars/default/mitsubishi/delica_d5.webp" },
+        { "maker": "三菱", "model": "エクリプスクロス", "image": "assets/img/cars/default/mitsubishi/eclipsecross.webp" },
+        { "maker": "三菱", "model": "デリカミニ", "image": "assets/img/cars/default/mitsubishi/delicamini.webp" },
+        { "maker": "三菱", "model": "アウトランダーPHEV", "image": "assets/img/cars/default/mitsubishi/outlander_phev.webp" },
+        { "maker": "三菱", "model": "ミラージュ", "image": "assets/img/cars/default/mitsubishi/mirage.webp" },
+        { "maker": "三菱", "model": "パジェロ", "image": "assets/img/cars/default/mitsubishi/pajero.webp" }
+    ],
+    "ダイハツ": [
+        { "maker": "ダイハツ", "model": "タント", "image": "assets/img/cars/default/daihatsu/tanto.webp" },
+        { "maker": "ダイハツ", "model": "ムーヴ", "image": "assets/img/cars/default/daihatsu/move.webp" },
+        { "maker": "ダイハツ", "model": "ミライース", "image": "assets/img/cars/default/daihatsu/mirae.webp" },
+        { "maker": "ダイハツ", "model": "キャスト", "image": "assets/img/cars/default/daihatsu/cast.webp" },
+        { "maker": "ダイハツ", "model": "ブーン", "image": "assets/img/cars/default/daihatsu/boon.webp" },
+        { "maker": "ダイハツ", "model": "トール", "image": "assets/img/cars/default/daihatsu/thor.webp" },
+        { "maker": "ダイハツ", "model": "ロッキー", "image": "assets/img/cars/default/daihatsu/rocky.webp" },
+        { "maker": "ダイハツ", "model": "コペン", "image": "assets/img/cars/default/daihatsu/copen.webp" }
+    ],
+    "レクサス": [
+        { "maker": "レクサス", "model": "NX", "image": "assets/img/cars/default/lexus/nx.webp" },
+        { "maker": "レクサス", "model": "RX", "image": "assets/img/cars/default/lexus/rx.webp" },
+        { "maker": "レクサス", "model": "ES", "image": "assets/img/cars/default/lexus/es.webp" },
+        { "maker": "レクサス", "model": "IS", "image": "assets/img/cars/default/lexus/is.webp" },
+        { "maker": "レクサス", "model": "UX", "image": "assets/img/cars/default/lexus/ux.webp" },
+        { "maker": "レクサス", "model": "LC", "image": "assets/img/cars/default/lexus/lc.webp" },
+        { "maker": "レクサス", "model": "LS", "image": "assets/img/cars/default/lexus/ls.webp" },
+        { "maker": "レクサス", "model": "RX450h", "image": "assets/img/cars/default/lexus/rx450h.webp" }
+    ],
+    "bmw": [
+        { "maker": "BMW", "model": "3シリーズ", "image": "assets/img/cars/default/bmw/3series.webp" },
+        { "maker": "BMW", "model": "X1", "image": "assets/img/cars/default/bmw/x1.webp" },
+        { "maker": "BMW", "model": "X3", "image": "assets/img/cars/default/bmw/x3.webp" },
+        { "maker": "BMW", "model": "5シリーズ", "image": "assets/img/cars/default/bmw/5series.webp" },
+        { "maker": "BMW", "model": "X5", "image": "assets/img/cars/default/bmw/x5.webp" },
+        { "maker": "BMW", "model": "1シリーズ", "image": "assets/img/cars/default/bmw/1series.webp" },
+        { "maker": "BMW", "model": "4シリーズ", "image": "assets/img/cars/default/bmw/4series.webp" },
+        { "maker": "BMW", "model": "2シリーズ", "image": "assets/img/cars/default/bmw/2series.webp" }
+    ],
+    "メルセデス・ベンツ": [
+        { "maker": "メルセデス・ベンツ", "model": "Cクラス", "image": "assets/img/cars/default/mercedes/cclass.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "Eクラス", "image": "assets/img/cars/default/mercedes/eclass.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "GLC", "image": "assets/img/cars/default/mercedes/glc.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "GLE", "image": "assets/img/cars/default/mercedes/gle.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "Aクラス", "image": "assets/img/cars/default/mercedes/aclass.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "Sクラス", "image": "assets/img/cars/default/mercedes/sclass.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "GLA", "image": "assets/img/cars/default/mercedes/gla.webp" },
+        { "maker": "メルセデス・ベンツ", "model": "SL", "image": "assets/img/cars/default/mercedes/sl.webp" }
+    ],
+    "フォルクスワーゲン": [
+        { "maker": "フォルクスワーゲン", "model": "ゴルフ", "image": "assets/img/cars/default/vw/golf.webp" },
+        { "maker": "フォルクスワーゲン", "model": "T-CROSS", "image": "assets/img/cars/default/vw/tcross.webp" },
+        { "maker": "フォルクスワーゲン", "model": "ティグアン", "image": "assets/img/cars/default/vw/tiguan.webp" },
+        { "maker": "フォルクスワーゲン", "model": "ポロ", "image": "assets/img/cars/default/vw/polo.webp" },
+        { "maker": "フォルクスワーゲン", "model": "パサート", "image": "assets/img/cars/default/vw/passat.webp" },
+        { "maker": "フォルクスワーゲン", "model": "ID.4", "image": "assets/img/cars/default/vw/id4.webp" },
+        { "maker": "フォルクスワーゲン", "model": "シャラン", "image": "assets/img/cars/default/vw/sharan.webp" },
+        { "maker": "フォルクスワーゲン", "model": "ティグレ", "image": "assets/img/cars/default/vw/tigore.webp" }
+    ],
+    "アウディ": [
+        { "maker": "アウディ", "model": "A3", "image": "assets/img/cars/default/audi/a3.webp" },
+        { "maker": "アウディ", "model": "A4", "image": "assets/img/cars/default/audi/a4.webp" },
+        { "maker": "アウディ", "model": "A6", "image": "assets/img/cars/default/audi/a6.webp" },
+        { "maker": "アウディ", "model": "Q2", "image": "assets/img/cars/default/audi/q2.webp" },
+        { "maker": "アウディ", "model": "Q3", "image": "assets/img/cars/default/audi/q3.webp" },
+        { "maker": "アウディ", "model": "Q5", "image": "assets/img/cars/default/audi/q5.webp" },
+        { "maker": "アウディ", "model": "Q7", "image": "assets/img/cars/default/audi/q7.webp" },
+        { "maker": "アウディ", "model": "e-tron", "image": "assets/img/cars/default/audi/etron.webp" }
+    ],
+    "ボルボ": [
+        { "maker": "ボルボ", "model": "V60", "image": "assets/img/cars/default/volvo/v60.webp" },
+        { "maker": "ボルボ", "model": "V90", "image": "assets/img/cars/default/volvo/v90.webp" },
+        { "maker": "ボルボ", "model": "XC40", "image": "assets/img/cars/default/volvo/xc40.webp" },
+        { "maker": "ボルボ", "model": "XC60", "image": "assets/img/cars/default/volvo/xc60.webp" },
+        { "maker": "ボルボ", "model": "XC90", "image": "assets/img/cars/default/volvo/xc90.webp" },
+        { "maker": "ボルボ", "model": "C40", "image": "assets/img/cars/default/volvo/c40.webp" },
+        { "maker": "ボルボ", "model": "S60", "image": "assets/img/cars/default/volvo/s60.webp" },
+        { "maker": "ボルボ", "model": "S90", "image": "assets/img/cars/default/volvo/s90.webp" }
+    ],
+    "ジープ": [
+        { "maker": "ジープ", "model": "ラングラー", "image": "assets/img/cars/default/jeep/wrangler.webp" },
+        { "maker": "ジープ", "model": "チェロキー", "image": "assets/img/cars/default/jeep/cherokee.webp" },
+        { "maker": "ジープ", "model": "グランドチェロキー", "image": "assets/img/cars/default/jeep/grandcherokee.webp" },
+        { "maker": "ジープ", "model": "コンパス", "image": "assets/img/cars/default/jeep/compass.webp" },
+        { "maker": "ジープ", "model": "レネゲード", "image": "assets/img/cars/default/jeep/renegade.webp" },
+        { "maker": "ジープ", "model": "コマンダー", "image": "assets/img/cars/default/jeep/commander.webp" },
+        { "maker": "ジープ", "model": "グラディエーター", "image": "assets/img/cars/default/jeep/gladiator.webp" },
+        { "maker": "ジープ", "model": "パトリオット", "image": "assets/img/cars/default/jeep/patriot.webp" }
+    ]
+}
+

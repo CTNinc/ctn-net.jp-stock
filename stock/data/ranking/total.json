@@ -1,0 +1,37 @@
+[
+    {
+        "manufacturer_name": "ホンダ",
+        "car_model_name": "N-BOX",
+        "image_url": "assets/img/cars/default/honda/n-box.webp"
+    },
+    {
+        "manufacturer_name": "トヨタ",
+        "car_model_name": "プリウス",
+        "image_url": "assets/img/cars/default/toyota/prius.webp"
+    },
+    {
+        "manufacturer_name": "トヨタ",
+        "car_model_name": "アルファード",
+        "image_url": "assets/img/cars/default/toyota/alphard.webp"
+    },
+    {
+        "manufacturer_name": "日産",
+        "car_model_name": "セレナ",
+        "image_url": "assets/img/cars/default/nissan/serena.webp"
+    },
+        {
+        "manufacturer_name": "ダイハツ",
+        "car_model_name": "タント",
+        "image_url": "assets/img/cars/default/daihatsu/tanto.webp"
+    },
+    {
+        "manufacturer_name": "スズキ",
+        "car_model_name": "ハスラー",
+        "image_url": "assets/img/cars/default/suzuki/hustler.webp"
+    },
+    {
+        "manufacturer_name": "ホンダ",
+        "car_model_name": "フリード",
+        "image_url": "assets/img/cars/default/honda/freed.webp"
+    }
+]

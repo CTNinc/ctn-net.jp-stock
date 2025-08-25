@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex">
+
+  <title>@yield('title', 'テスト')</title>
+
+  <!-- CSS -->
+  <!-- * asset('assets/ -->
+  <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/common.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="login-button-wrapper">
+      <button onclick="openLoginModal()" class="login-button">ログイン</button>
+    </div>
+  </header>
+
+  <!-- ログインモーダル -->
+  <div id="login-modal" class="modal-login" style="display: none;">
+    <div class="modal-content-login">
+      <span class="close-btn-login" onclick="closeLoginModal()">×</span>
+      <h2>ログイン</h2>
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <label for="email">メールアドレス</label>
+        <input type="email" name="email" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" name="password" required>
+
+        <button type="submit" class="submit-button-login">ログイン</button>
+
+        <div class="login-links">
+          <a href="javascript:void(0);" onclick="openResetModal()">ログインできない場合</a>
+          <span>|</span>
+          <a href="javascript:void(0);" onclick="openRegisterModal()">新規登録する</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+    <!-- 新規登録モーダル -->
+  <div id="register-modal" class="modal-login" style="display: none;">
+    <div class="modal-content-login">
+      <span class="close-btn-login" onclick="closeRegisterModal()">×</span>
+      <h2>新規登録</h2>
+      <form method="POST" action="{{ route('register') }}">
+        @csrf
+        <label for="name">名前</label>
+        <input type="text" name="name" required>
+
+        <label for="email">メールアドレス</label>
+        <input type="email" name="email" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" name="password" required>
+
+        <label for="password_confirmation">パスワード確認</label>
+        <input type="password" name="password_confirmation" required>
+
+        <!-- エラー -->
+        @if ($errors->any())
+          <div class="form-errors">
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li style="color: red;">{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
+        <button type="submit" class="submit-button-login">登録する</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- パスワード再設定モーダル -->
+  <div id="reset-modal" class="modal-login" style="display: none;">
+    <div class="modal-content-login">
+      <span class="close-btn-login" onclick="closeResetModal()">×</span>
+      <h2>パスワード再設定</h2>
+      <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+        <label for="email">メールアドレス</label>
+        <input type="email" name="email" required>
+
+        <button type="submit" class="submit-button-login">送信する</button>
+      </form>
+    </div>
+  </div>
+
+
+  @yield('content')
+
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="inner_pt1">
+      <div class="footer__section">
+        <h4>車・バイク一括査定</h4>
+        <p>
+          <a href="#">CTN車一括査定</a><span>｜</span>
+          <a href="#">CTNバイク一括査定</a>
+        </p>
+      </div>
+      <div class="left-border">
+        <div class="footer__section">
+          <h4>専門車買取一括査定</h4>
+          <p>
+            <a href="#">廃車買取一括査定</a><span>｜</span>
+            <a href="#">事故車買取一括査定</a><span>｜</span>
+            <a href="#">旧車買取一括査定</a><span>｜</span>
+            <a href="#">輸入車買取一括査定</a><span>｜</span>
+            <a href="#">スーパーカー買取一括査定</a>
+          </p>
+        </div>
+        <div class="footer__section">
+          <h4>タイプから探す買取査定相場</h4>
+          <p>
+            <a href="#">軽自動車</a><span>｜</span>
+            <a href="#">コンパクトカー</a><span>｜</span>
+            <a href="#">SUV・クロカン</a><span>｜</span>
+            <a href="#">ミニバン・ワンボックス</a><span>｜</span>
+            <a href="#">ハッチバック</a><span>｜</span>
+            <a href="#">セダン</a><span>｜</span>
+            <a href="#">オープンカー</a><span>｜</span>
+            <a href="#">ステーションワゴン</a><span>｜</span>
+            <a href="#">クーペ</a><span>｜</span>
+            <a href="#">ピックアップトラック</a><span>｜</span>
+            <a href="#">商用車・バン</a><span>｜</span>
+            <a href="#">キャンピングカー</a><span>｜</span>
+            <a href="#">福祉車両</a><span>｜</span>
+            <a href="#">トラック・バス</a>
+          </p>
+        </div>
+        <div class="footer__section">
+          <h4>車の買取・査定相場</h4>
+          <p>
+            <strong>国産車　-　</strong>
+            <a href="#">レクサス</a><span>｜</span>
+            <a href="#">トヨタ</a><span>｜</span>
+            <a href="#">ホンダ</a><span>｜</span>
+            <a href="#">日産</a><span>｜</span>
+            <a href="#">スズキ</a><span>｜</span>
+            <a href="#">スバル</a><span>｜</span>
+            <a href="#">マツダ</a><span>｜</span>
+            <a href="#">ダイハツ</a><span>｜</span>
+            <a href="#">三菱</a>
+            <br>
+            <strong>輸入車　-　</strong>
+            <a href="#">ベンツ</a><span>｜</span>
+            <a href="#">BMW</a><span>｜</span>
+            <a href="#">ワーゲン</a><span>｜</span>
+            <a href="#">アウディ</a><span>｜</span>
+            <a href="#">ミニ</a><span>｜</span>
+            <a href="#">ポルシェ</a><span>｜</span>
+            <a href="#">ジープ</a><span>｜</span>
+            <a href="#">プジョー</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h4>メディア事業</h4>
+        <p>
+          <a href="#">車販売サイト</a><span>｜</span>
+          <a href="#">クルマのあれこれ</a><span>｜</span>
+          <a href="#">カーライン</a>
+        </p>
+      </div>
+      <div class="footer__section">
+        <h4>モビリティ事業</h4>
+        <p><a href="#">新車仕入れ（業販）サービス</a><span>｜</span>
+          <a href="#">CTN販売支援サービス</a><span>｜</span>
+          <a href="#">店舗設計・建築</a><span>｜</span>
+          <a href="#">CTNファイナンス</a><span>｜</span>
+          <a href="#">MANGOSTEEN</a>
+        </p>
+      </div>
+      <div class="footer__section">
+        <h4>WEBソリューション事業</h4>
+        <p><a href="#">SEOコンサルティングサービス</a><span>｜</span>
+          <a href="#">WEB制作</a><span>｜</span>
+          <a href="#">コンテンツ制作</a><span>｜</span>
+          <a href="#">広告運用</a><span>｜</span>
+          <a href="#">SHOPコネクト</a>
+        </p>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__nav">
+          <a href="#">運営会社</a><span>｜</span>
+          <a href="#">ニュース</a><span>｜</span>
+          <a href="#">採用情報</a><span>｜</span>
+          <a href="#">お問い合わせ</a><span>｜</span>
+          <a href="#">利用規約</a>
+        </div>
+        <div class="footer__copy">
+          <div class="footer__img">
+            <img src="{{ asset('assets/img/logo_ctn_white.png') }}" alt="CTN Logo" class="footer__logo">
+          </div>
+          <p>© <span id="copyright-year"></span> CTN Co., Ltd. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+<script>
+  function openLoginModal() {
+    document.getElementById('login-modal').style.display = 'flex';
+  }
+
+  function closeLoginModal() {
+    document.getElementById('login-modal').style.display = 'none';
+  }
+
+  function openRegisterModal() {
+    closeLoginModal();
+    document.getElementById('register-modal').style.display = 'flex';
+  }
+
+  function closeRegisterModal() {
+    document.getElementById('register-modal').style.display = 'none';
+  }
+
+  function openResetModal() {
+    closeLoginModal();
+    document.getElementById('reset-modal').style.display = 'flex';
+  }
+
+  function closeResetModal() {
+    document.getElementById('reset-modal').style.display = 'none';
+  }
+
+  // バックグラウンドクリックで閉じる処理
+  document.addEventListener('click', function (event) {
+    const modals = ['login-modal', 'register-modal', 'reset-modal'];
+    modals.forEach(id => {
+      const modal = document.getElementById(id);
+      if (modal && modal.style.display === 'flex' && event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+
+
+  // コピーライト年取得表示
+  document.addEventListener('DOMContentLoaded', function () {
+    const year = new Date().getFullYear();
+    document.getElementById("copyright-year").textContent = year;
+  });
+
+
+</script>
+
+
+
+
+</html>
