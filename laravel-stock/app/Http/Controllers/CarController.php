@@ -46,6 +46,10 @@ class CarController extends Controller
             'year_max' => 'search[year_max]',
             'mileage_min' => 'search[mileage_min]',
             'mileage_max' => 'search[mileage_max]',
+            'passenger_capacity_min' => 'search[passenger_capacity_min]',
+            'passenger_capacity_max' => 'search[passenger_capacity_max]',
+            'engine_displacement_min' => 'search[engine_displacement_min]',
+            'engine_displacement_max' => 'search[engine_displacement_max]',
             'maker' => 'search[manufacturer_name]',
             'vehicle' => 'search[car_model_name]',
             'bodyType' => 'search[body_shape_type]',
@@ -67,10 +71,43 @@ class CarController extends Controller
             }
         }
 
+        // 乗車定員検索の処理
+        $hasPassengerCapacitySearch = false;
+        $passengerCapacityMin = $request->input('passenger_capacity_min');
+        $passengerCapacityMax = $request->input('passenger_capacity_max');
+        
+        if (!empty($passengerCapacityMin) || !empty($passengerCapacityMax)) {
+            $hasPassengerCapacitySearch = true;
+            // API不支持passenger_capacity筛选，删除无效参数
+            unset($params['search[passenger_capacity_min]']);
+            unset($params['search[passenger_capacity_max]']);
+            // 乘車定員筛选时，获取更多数据进行筛选
+            $params['rowsPerPage'] = 2000; // 获取足够多的数据进行本地筛选
+        }
+
         $api = new VehicleApiService();
         $response = $api->getVehicleList($params);
 
         $vehicles = $response['data']['data'] ?? [];
+
+        // 乗車定員のローカル筛选処理
+        if ($hasPassengerCapacitySearch) {
+            $vehicles = array_filter($vehicles, function ($vehicle) use ($passengerCapacityMin, $passengerCapacityMax) {
+                $capacity = $vehicle['passenger_capacity'] ?? null;
+                
+                // passenger_capacityがnullの場合はスキップ
+                if (is_null($capacity)) {
+                    return false;
+                }
+                
+                $passMin = empty($passengerCapacityMin) || $capacity >= (int)$passengerCapacityMin;
+                $passMax = empty($passengerCapacityMax) || $capacity <= (int)$passengerCapacityMax;
+                
+                return $passMin && $passMax;
+            });
+            
+            $vehicles = array_values($vehicles); // 重新索引数组
+        }
 
         // $vehiclesById = collect($vehicles)->keyBy('id');
 
@@ -557,94 +594,7 @@ class CarController extends Controller
 
 
 
-    public function allMakers(VehicleApiService $vehicleApiService)
-    {
-        $makersByCountry = [
-            '日本' => [
-                'レクサス',
-                'トヨタ',
-                '日産',
-                'ホンダ',
-                'マツダ',
-                'スバル',
-                'スズキ',
-                '三菱',
-                'ダイハツ',
-                'いすゞ',
-                '光岡自動車',
-                'トミーカイラ',
-                '日野自動車',
-                '三菱ふそう',
-            ],
-            'ドイツ' => [
-                'メルセデス・ベンツ',
-                'AMG',
-                'マイバッハ',
-                'スマート',
-                'メルセデスAMG',
-                'BMW',
-                'BMWアルピナ',
-                'アウディ',
-                'フォルクスワーゲン',
-                'オペル',
-                'ポルシェ',
-                'ミニ',
-                'メルセデス・マイバッハ',
-            ],
-            'イギリス' => [
-                'ロールスロイス',
-                'ベントレー',
-                'ジャガー',
-                'デイムラー',
-                'ランドローバー',
-                'アストンマーチン',
-                'ロータス',
-                'マクラーレン',
-                'TVR',
-                'MG',
-                'ローバー',
-                'ケータハム',
-                'モーガン',
-            ],
-            'アメリカ' => [
-                'キャデラック',
-                'シボレー',
-                'ビュイック',
-                'ポンティアック',
-                'サターン',
-                'ハマー',
-                'GMC',
-                'リンカーン',
-                'マーキュリー',
-                'クライスラー',
-                'ダッジ',
-                'ジープ',
-                'テスラ',
-                '米国トヨタ',
-                '米国日産',
-                '米国ホンダ',
-                '米国スバル',
-                '米国三菱',
-                '米国マツダ',
-                '米国いすゞ',
-            ],
-            'イタリア' => ['アルファロメオ', 'フェラーリ', 'ランボルギーニ', 'マセラティ', 'アバルト'],
-            'フランス' => ['プジョー', 'ルノー', 'シトロエン', 'DSオートモビル', 'アルピーヌ'],
-            'スウェーデン' => ['ボルボ', 'サーブ'],
-            'オランダ' => ['ドンカーブート'],
-            '韓国' => ['ヒョンデ'],
-            'オーストリア' => ['KTM'],
-        ];
 
-
-        $flatMakerList = collect($makersByCountry)->flatten()->toArray();
-        $counts = $vehicleApiService->getVehicleCountsByMakers($flatMakerList);
-
-        return view('cars.makerlist', [
-            'makersByCountry' => $makersByCountry,
-            'counts' => $counts,
-        ]);
-    }
 
 
 

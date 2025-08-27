@@ -125,11 +125,8 @@ class CarApiController extends Controller
         
         if (!empty($passengerCapacityMin) || !empty($passengerCapacityMax)) {
             $hasPassengerCapacitySearch = true;
-            // API不支持passenger_capacity筛选，删除无效参数
-            unset($params['search[passenger_capacity_min]']);
-            unset($params['search[passenger_capacity_max]']);
-            // 乘車定員筛选时，获取更多数据进行筛选
-            $params['rowsPerPage'] = 2000; // 获取足够多的数据进行本地筛选
+            // API支持passenger_capacity筛选，保留参数让API处理
+            // 这样可以在API层面进行筛选，获得正确的分页信息
         }
         
         if (isset($sortMapping[$sort]) && !in_array($sort, ['cc_low', 'cc_high'])) {
@@ -152,79 +149,17 @@ class CarApiController extends Controller
         $meta = $response['data']['meta'] ?? null;
         $vehicleCount = $meta['total'] ?? count($vehicles);
 
-        // 5. ローカル筛选処理（乗車定員）
-        if ($hasPassengerCapacitySearch) {
-            // 全体車両のpassenger_capacity統計をチェック
-            $capacityStats = [];
-            $totalNull = 0;
-            $totalValid = 0;
-            $capacityValues = [];
-            
-            foreach ($vehicles as $vehicle) {
-                $capacity = $vehicle['passenger_capacity'] ?? null;
-                if (is_null($capacity)) {
-                    $totalNull++;
-                } else {
-                    $totalValid++;
-                    $capacityValues[] = $capacity;
-                }
-            }
-            
-            $capacitySample = [];
-            foreach (array_slice($vehicles, 0, 10) as $i => $vehicle) {
-                $capacitySample["vehicle_$i"] = $vehicle['passenger_capacity'] ?? 'null';
-            }
-            
-            \Log::info('Passenger capacity filtering', [
-                'min' => $passengerCapacityMin,
-                'max' => $passengerCapacityMax,
-                'total_vehicles_before' => count($vehicles),
-                'total_null_capacity' => $totalNull,
-                'total_valid_capacity' => $totalValid,
-                'capacity_values' => array_count_values($capacityValues),
-                'sample_capacities' => $capacitySample
+        // デバッグ：API返回的数据结构
+        if (!empty($vehicles)) {
+            $sampleVehicle = $vehicles[0];
+            \Log::info('API Response Sample Vehicle', [
+                'vehicle_keys' => array_keys($sampleVehicle),
+                'sample_vehicle' => $sampleVehicle
             ]);
-            
-            $nullCount = 0;
-            $validCount = 0;
-            
-            $vehicles = array_filter($vehicles, function ($vehicle) use ($passengerCapacityMin, $passengerCapacityMax, &$nullCount, &$validCount) {
-                $capacity = $vehicle['passenger_capacity'] ?? null;
-                
-                // passenger_capacityがnullの場合はスキップ
-                if (is_null($capacity)) {
-                    $nullCount++;
-                    return false;
-                }
-                
-                $validCount++;
-                $passMin = empty($passengerCapacityMin) || $capacity >= (int)$passengerCapacityMin;
-                $passMax = empty($passengerCapacityMax) || $capacity <= (int)$passengerCapacityMax;
-                
-
-                
-                return $passMin && $passMax;
-            });
-            
-            $vehicles = array_values($vehicles); // 重新索引数组
-            
-            \Log::info('Passenger capacity filtering result', [
-                'total_vehicles_after' => count($vehicles),
-                'null_count' => $nullCount,
-                'valid_count' => $validCount
-            ]);
-            
-            // 筛选後のメタ情報を更新
-            if ($meta) {
-                $meta['total'] = count($vehicles);
-                $meta['per_page'] = count($vehicles);
-                $meta['current_page'] = 1;
-                $meta['last_page'] = 1;
-                $meta['from'] = count($vehicles) > 0 ? 1 : 0;
-                $meta['to'] = count($vehicles);
-            }
-            $vehicleCount = count($vehicles);
         }
+
+        // 5. API已经处理了乘客容量筛选，不需要本地筛选
+        // 分页信息由API返回，保持原样
 
         // 6. ローカル排序処理
         if ($sort === 'year_new_created') {
@@ -261,6 +196,7 @@ class CarApiController extends Controller
 
         // 7. ビューを返す
         return view('cars.index', [
+            'latestVehicles' => $vehicles,
             'vehicles' => $vehicles,
             'vehicleCount' => $vehicleCount,
             'pagination' => $meta,
@@ -274,10 +210,17 @@ class CarApiController extends Controller
             'price_max' => $request->input('price_max'),
             'mileage_min' => $request->input('mileage_min'),
             'mileage_max' => $request->input('mileage_max'),
+            'passenger_capacity_min' => $request->input('passenger_capacity_min'),
+            'passenger_capacity_max' => $request->input('passenger_capacity_max'),
+            'engine_displacement_min' => $request->input('engine_displacement_min'),
+            'engine_displacement_max' => $request->input('engine_displacement_max'),
             'year_min' => $request->input('year_min'),
             'year_max' => $request->input('year_max'),
             'color' => $request->input('color'),
-            'sort' => $sort
+            'sort' => $sort,
+            'availableBodyTypes' => [], // 空の配列を追加
+            'areas' => [], // 空の配列を追加
+            'retailerMap' => [] // 空の配列を追加
         ]);
     }
 
@@ -357,41 +300,7 @@ class CarApiController extends Controller
         ]);
     }
 
-    /**
-     * 英文别名を日文制造商名に変換（フォールバック用）
-     */
-    private function convertToJapanese($englishName)
-    {
-        // まずMakerHelperを試す
-        try {
-            if (class_exists('\App\Helpers\MakerHelper')) {
-                return \App\Helpers\MakerHelper::toJapanese($englishName);
-            }
-        } catch (\Exception $e) {
-            \Log::warning('MakerHelper not available, using fallback', ['error' => $e->getMessage()]);
-        }
-        
-        // フォールバック：基本的なマッピング
-        $basicMapping = [
-            'honda' => 'ホンダ',
-            'toyota' => 'トヨタ',
-            'nissan' => '日産',
-            'mazda' => 'マツダ',
-            'subaru' => 'スバル',
-            'suzuki' => 'スズキ',
-            'mitsubishi' => '三菱',
-            'daihatsu' => 'ダイハツ',
-            'lexus' => 'レクサス',
-            'bmw' => 'BMW',
-            'mercedes-benz' => 'メルセデス・ベンツ',
-            'audi' => 'アウディ',
-            'volkswagen' => 'フォルクスワーゲン',
-            'porsche' => 'ポルシェ',
-            'tesla' => 'テスラ',
-        ];
-        
-        return $basicMapping[$englishName] ?? $englishName;
-    }
+
 
     /**
      * キャッシュファイルから車型データを読み取り（優先方法）

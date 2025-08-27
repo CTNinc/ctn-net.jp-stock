@@ -567,13 +567,13 @@
             </div>
             <div class="number-flex scroll" data-simplebar>
               @foreach ([
-              ['min' => null, 'max' => 4, 'label' => '〜4名'],
-              ['min' => null, 'max' => 8, 'label' => '〜8名'],
-              ['min' => null, 'max' => 12, 'label' => '〜12名'],
-              ['min' => null, 'max' => 16, 'label' => '〜16名'],
-              ['min' => null, 'max' => 24, 'label' => '〜24名'],
-              ['min' => null, 'max' => 30, 'label' => '〜30名'],
-              ['min' => null, 'max' => 40, 'label' => '40名以上'],
+              ['min' => 4, 'max' =>null, 'label' => '〜4名'],
+              ['min' => 8, 'max' =>null, 'label' => '〜8名'],
+              ['min' => 12, 'max' =>null, 'label' => '〜12名'],
+              ['min' => 16, 'max' =>null, 'label' => '〜16名'],
+              ['min' => 24, 'max' =>null, 'label' => '〜24名'],
+              ['min' => 30, 'max' =>null, 'label' => '〜30名'],
+              ['min' => 40, 'max' =>null, 'label' => '40名以上'],
               ] as $passenger)
               @php
               $query = [];
