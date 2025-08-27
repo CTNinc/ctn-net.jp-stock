@@ -212,15 +212,10 @@ class UpdateMakerModelsCache extends Command
                     // 统计数量
                     $modelCounts[$matchedModel] = ($modelCounts[$matchedModel] ?? 0) + 1;
                     
-                    // 收集第一张有效图片
-                    if (!isset($modelImages[$matchedModel]) && 
-                        !empty($vehicle['images'][0]['image_url'])) {
-                        $imageUrl = $vehicle['images'][0]['image_url'];
-                        // 验证图片URL不是默认图片
-                        if (strpos($imageUrl, 'no-image') === false && 
-                            strpos($imageUrl, 'default') === false) {
-                            $modelImages[$matchedModel] = $imageUrl;
-                        }
+                    // 收集本地图片路径
+                    if (!isset($modelImages[$matchedModel])) {
+                        $localImagePath = $this->getLocalModelImage($maker, $matchedModel);
+                        $modelImages[$matchedModel] = $localImagePath;
                     }
                 }
             }
@@ -236,7 +231,7 @@ class UpdateMakerModelsCache extends Command
                     $estimatedCount = $sampleCount;
                 }
                 
-                $imageUrl = $modelImages[$modelName] ?? $this->getDefaultModelImage($maker, $modelName);
+                $imageUrl = $modelImages[$modelName] ?? $this->getLocalModelImage($maker, $modelName);
                 
                 $models[] = [
                     'name' => $modelName,
@@ -323,7 +318,7 @@ class UpdateMakerModelsCache extends Command
                     'page' => $page,
                 ]);
                 
-                // 检查是否是备用数据
+                
                 if (isset($response['is_fallback']) && $response['is_fallback']) {
                     $this->warn("  API returned fallback data for {$maker}, stopping batch fetch");
                     break;
@@ -331,19 +326,18 @@ class UpdateMakerModelsCache extends Command
                 
                 $vehicles = $response['data']['data'] ?? [];
                 if (empty($vehicles)) {
-                    break; // 没有更多数据
+                    break; 
                 }
                 
                 $allVehicles = array_merge($allVehicles, $vehicles);
                 $this->line("    Page {$page}: " . count($vehicles) . " vehicles (" . count($allVehicles) . " total)");
                 
-                // 检查是否达到最大车辆数限制
                 if (count($allVehicles) >= $maxVehicles) {
                     $this->warn("  Reached maximum vehicles limit ({$maxVehicles}) for {$maker}");
                     break;
                 }
                 
-                // 判断是否还有下一页
+                
                 $hasNextPage = count($vehicles) == 50;
                 $page++;
                 
@@ -419,22 +413,17 @@ class UpdateMakerModelsCache extends Command
             // 统计数量
             $modelCounts[$vehicleModel] = ($modelCounts[$vehicleModel] ?? 0) + 1;
             
-            // 收集第一张有效图片
-            if (!isset($modelImages[$vehicleModel]) && 
-                !empty($vehicle['images'][0]['image_url'])) {
-                $imageUrl = $vehicle['images'][0]['image_url'];
-                // 验证图片URL不是默认图片
-                if (strpos($imageUrl, 'no-image') === false && 
-                    strpos($imageUrl, 'default') === false) {
-                    $modelImages[$vehicleModel] = $imageUrl;
-                }
+            // 收集本地图片路径
+            if (!isset($modelImages[$vehicleModel])) {
+                $localImagePath = $this->getLocalModelImage($maker, $vehicleModel);
+                $modelImages[$vehicleModel] = $localImagePath;
             }
         }
         
         // 构建车型数据
         $models = [];
         foreach ($modelCounts as $modelName => $count) {
-            $imageUrl = $modelImages[$modelName] ?? $this->getDefaultModelImage($maker, $modelName);
+            $imageUrl = $modelImages[$modelName] ?? $this->getLocalModelImage($maker, $modelName);
             
             $models[] = [
                 'name' => $modelName,
@@ -511,151 +500,95 @@ class UpdateMakerModelsCache extends Command
     }
 
     /**
-     * 获取默认的车型图片
+     * 获取本地车型图片路径
      */
-    private function getDefaultModelImage(string $maker, string $modelName): string
+    private function getLocalModelImage(string $maker, string $modelName): string
     {
-        // 尝试使用预设的车型图片
-        $makerLower = strtolower(str_replace(['・', '-', ' '], '', $maker));
-        $modelLower = strtolower(str_replace(['・', '-', ' '], '', $modelName));
+        // 从配置文件获取品牌名称映射
+        $brandMapping = config('maker_mapping');
         
-        $possiblePaths = [
-            "assets/img/cars/default/{$makerLower}/{$modelLower}.webp",
-            "assets/img/cars/default/{$makerLower}/default.webp",
-        ];
+        // 获取品牌英文名称
+        $brandName = $brandMapping[$maker] ?? strtolower(str_replace(['・', '-', ' '], '', $maker));
         
-        foreach ($possiblePaths as $path) {
-            $fullPath = public_path($path);
-            if (file_exists($fullPath)) {
-                return asset($path);
+        // 检查品牌目录是否存在
+        $brandDir = public_path("data/images/{$brandName}");
+        if (!is_dir($brandDir)) {
+            // 尝试其他可能的品牌目录名称
+            $alternativeBrandNames = [
+                str_replace('_', '', $brandName), // 移除下划线
+                str_replace('-', '', $brandName), // 移除连字符
+                str_replace(' ', '', $brandName), // 移除空格
+            ];
+            
+            foreach ($alternativeBrandNames as $altName) {
+                $altDir = public_path("data/images/{$altName}");
+                if (is_dir($altDir)) {
+                    $brandName = $altName;
+                    $brandDir = $altDir;
+                    break;
+                }
             }
         }
         
-        // 返回通用默认图片
-        return asset('assets/img/car-image/no-image.webp');
+        if (!is_dir($brandDir)) {
+            return "/assets/img/car-image/no-image.webp";
+        }
+        
+        // 获取目录中的所有图片文件
+        $imageFiles = glob($brandDir . '/*.{jpg,jpeg,png,webp}', GLOB_BRACE);
+        $imageFileNames = array_map('basename', $imageFiles);
+        
+        // 尝试多种匹配策略
+        $searchPatterns = [
+            $modelName, // 原始名称
+            str_replace(['・', '-', ' '], '', $modelName), // 移除特殊字符
+            strtolower(str_replace(['・', '-', ' ', '_'], '', $modelName)), // 小写并移除特殊字符
+            str_replace(['・', '-', ' '], '', strtolower($modelName)), // 小写后移除特殊字符
+        ];
+        
+        foreach ($searchPatterns as $pattern) {
+            // 精确匹配
+            foreach ($imageFileNames as $fileName) {
+                $fileNameWithoutExt = pathinfo($fileName, PATHINFO_FILENAME);
+                if (strcasecmp($fileNameWithoutExt, $pattern) === 0) {
+                    return "/data/images/{$brandName}/{$fileName}";
+                }
+            }
+            
+            // 部分匹配（包含关系）
+            foreach ($imageFileNames as $fileName) {
+                $fileNameWithoutExt = pathinfo($fileName, PATHINFO_FILENAME);
+                if (stripos($fileNameWithoutExt, $pattern) !== false || 
+                    stripos($pattern, $fileNameWithoutExt) !== false) {
+                    return "/data/images/{$brandName}/{$fileName}";
+                }
+            }
+        }
+        
+        // 如果找不到对应图片，返回默认图片
+        return "/assets/img/car-image/no-image.webp";
     }
 
     /**
-     * 指定された車型の画像を取得（已废弃，改用批量方式）
+     * 获取本地车型图片路径（已废弃，改用getLocalModelImage）
      */
     private function fetchModelImage(VehicleApiService $vehicleApiService, string $maker, string $modelName): string
     {
-        // 多种搜索策略获取图片
-        $searchPatterns = [
-            $maker . ' ' . $modelName,  // "トヨタ プリウス"
-            $modelName,                 // "プリウス"
-            $maker,                     // "トヨタ"
-        ];
-        
-        foreach ($searchPatterns as $searchTerm) {
-            try {
-                $response = $vehicleApiService->getVehicleList([
-                    'search[name]' => $searchTerm,
-                    'rowsPerPage' => 3, // 只需要少量结果
-                ]);
-
-                // 检查是否是备用数据
-                if (isset($response['is_fallback']) && $response['is_fallback']) {
-                    continue; // 跳过备用数据，尝试下一个搜索模式
-                }
-
-                $vehicles = $response['data']['data'] ?? [];
-                
-                // 只取第一个有图片的车辆的第一张图片
-                foreach ($vehicles as $vehicle) {
-                    if (!empty($vehicle['images']) && is_array($vehicle['images'])) {
-                        // 取第一张有效图片就返回
-                        if (!empty($vehicle['images'][0]['image_url'])) {
-                            $imageUrl = $vehicle['images'][0]['image_url'];
-                            // 验证图片URL不是默认图片
-                            if (strpos($imageUrl, 'no-image') === false && 
-                                strpos($imageUrl, 'default') === false) {
-                                return $imageUrl; // 找到第一张有效图片就返回
-                            }
-                        }
-                    }
-                }
-            } catch (\Exception $e) {
-                \Log::debug("Search pattern failed for image: {$searchTerm}", ['error' => $e->getMessage()]);
-                continue;
-            }
-        }
-        
-        // 所有搜索都失败，返回默认图片
-        return asset('assets/img/car-image/no-image.webp');
+        return $this->getLocalModelImage($maker, $modelName);
     }
 
     /**
-     * 指定された車型の詳細情報を取得（旧方法，保留备用）
+     * 指定された車型の詳細情報を取得（简化版，只获取数量信息）
      */
     private function fetchModelDetails(VehicleApiService $vehicleApiService, string $maker, string $modelName): array
     {
         try {
-            // 複数の検索パターンを試す
-            $searchPatterns = [
-                $maker . ' ' . $modelName,  // "トヨタ プリウス"
-                $modelName,                 // "プリウス"
-                $maker,                     // "トヨタ" (制造商搜索)
-            ];
-            
-            $imageUrl = asset('assets/img/car-image/no-image.webp');
-            $count = 0;
-            
-            foreach ($searchPatterns as $searchTerm) {
-                try {
-                    $response = $vehicleApiService->getVehicleList([
-                        'search[name]' => $searchTerm,
-                        'rowsPerPage' => 10, // 获取更多结果以便筛选
-                    ]);
-
-                    // 检查是否是备用数据
-                    if (isset($response['is_fallback']) && $response['is_fallback']) {
-                        continue; // 跳过备用数据，尝试下一个搜索模式
-                    }
-
-                    $vehicles = $response['data']['data'] ?? [];
-                    $meta = $response['data']['meta'] ?? [];
-                    
-                    if (!empty($vehicles)) {
-                        // 尝试找到匹配的车型
-                        foreach ($vehicles as $vehicle) {
-                            $vehicleModel = $vehicle['model_name'] ?? $vehicle['car_model_name'] ?? '';
-                            if (stripos($vehicleModel, $modelName) !== false || 
-                                stripos($modelName, $vehicleModel) !== false) {
-                                
-                                // 找到匹配的车型，获取图片
-                                if (!empty($vehicle['images'][0]['image_url'])) {
-                                    $imageUrl = $vehicle['images'][0]['image_url'];
-                                }
-                                break;
-                            }
-                        }
-                        
-                        // 使用meta中的总数，或者生成一个合理的随机数
-                        $totalCount = $meta['total'] ?? 0;
-                        if ($totalCount > 0) {
-                            // 估算这个车型的数量（总数的一个比例）
-                            $count = max(1, intval($totalCount / 20)); // 假设每个车型占总数的1/20
-                        } else {
-                            // 生成一个基于车型名称的一致随机数
-                            $count = (crc32($maker . $modelName) % 50) + 5; // 5-54之间的数字
-                        }
-                        break; // 找到数据就退出循环
-                    }
-                } catch (\Exception $e) {
-                    // 记录但不中断，继续尝试下一个搜索模式
-                    \Log::debug("Search pattern failed: {$searchTerm}", ['error' => $e->getMessage()]);
-                }
-            }
-            
-            // 如果所有搜索都失败，生成一个合理的随机数量
-            if ($count === 0) {
-                $count = (crc32($maker . $modelName) % 30) + 5; // 5-34之间的数字
-            }
+            // 生成一个基于车型名称的一致随机数
+            $count = (crc32($maker . $modelName) % 50) + 5; // 5-54之间的数字
 
             return [
                 'name' => $modelName,
-                'image' => $imageUrl,
+                'image' => $this->getLocalModelImage($maker, $modelName),
                 'count' => $count,
             ];
             
@@ -671,7 +604,7 @@ class UpdateMakerModelsCache extends Command
             
             return [
                 'name' => $modelName,
-                'image' => asset('assets/img/car-image/no-image.webp'),
+                'image' => $this->getLocalModelImage($maker, $modelName),
                 'count' => $count,
             ];
         }
@@ -690,7 +623,7 @@ class UpdateMakerModelsCache extends Command
         foreach ($mockModels as $modelName) {
             $models[] = [
                 'name' => $modelName,
-                'image' => asset('assets/img/car-image/no-image.webp'),
+                'image' => $this->getLocalModelImage($maker, $modelName),
                 'count' => rand(5, 50),
             ];
         }
