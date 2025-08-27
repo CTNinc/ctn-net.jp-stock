@@ -278,6 +278,16 @@
     text-decoration: none;
     margin: 10px auto;
     box-shadow: 3px 3px 3px #c4c4c4;
+    position: relative;
+}
+.shop-box-detail a::before{
+    position: absolute;
+    content: url(../img/cta_car_icon.png);
+    transform: scale(0.15);
+    left: 3%;
+    top: 2%;
+    width: 30px;
+    height: 30px;
 }
 .shop-name {
     font-size: 16px;
@@ -518,5 +528,13 @@
     }
     .price-box.sp {
         display: block;
+        
     }
+    .shop-box-detail a::before {
+    transform: scale(0.12);
+    left: 2%;
+    top: 14%;
+    width: 20px;
+    height: 20px;
+}
 }

@@ -1,5 +1,5 @@
 .inner_pt1 {
-    max-width: 1200px;
+    max-width: 1020px;
     width: 100%;
     margin: 0 auto;
     /* padding-left: 60px;
@@ -650,7 +650,7 @@
 .news-item {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -666,7 +666,7 @@
 /* スライダー部分 */
 .news-slider {
     flex: 1;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
 }
 .news-slider-inner {
@@ -1718,7 +1718,7 @@
 .pagetop {
     position: absolute;
     top: -40px;
-    left: 50%;
+    left: 44%;
     transform: translateX(477px); /* X位置指定 */
     background-color: #ea5413;
     color: #fff;
@@ -2089,5 +2089,8 @@
     }
     .maker-class-item .maker-name {
         font-size: 11px;
+    }
+    .news-item{
+        font-size: 12px;
     }
 }

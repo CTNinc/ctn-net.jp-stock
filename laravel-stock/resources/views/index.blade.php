@@ -295,19 +295,21 @@
           <img src="{{ asset('assets/img/circle-arrow-left.svg') }}" alt="左へ">
         </div>
 
-        <!-- スライダー全体（横並び） -->
-        <div class="news-slider" id="news-slider" style="display: flex; transition: transform 0.5s ease;">
-          <div class="news-item flex-shrink-0" style="min-width: 100%;">
-            <span class="news-date">2025.08.05</span>
-            <p class="news-text">新規中古車情報を 12 件追加！</p>
-          </div>
-          <div class="news-item flex-shrink-0" style="min-width: 100%;">
-            <span class="news-date">2025.08.04</span>
-            <p class="news-text">車両情報を 8 件更新！</p>
-          </div>
-          <div class="news-item flex-shrink-0" style="min-width: 100%;">
-            <span class="news-date">2025.08.03</span>
-            <p class="news-text">特選車を3台ピックアップ中！</p>
+        <div class="news-viewport" style="overflow:hidden;width:90%;">
+          <div class="news-slider" id="news-slider" style="display:flex; transition: transform 0.5s ease;">
+            <!-- 元の .news-item をこの中に置く（JSでクローンが追加されます） -->
+            <div class="news-item flex-shrink-0" style="min-width:100%;">
+              <span class="news-date">2025.08.25</span>
+              <p class="news-text">新規中古車情報を 12 件追加！</p>
+            </div>
+            <div class="news-item flex-shrink-0" style="min-width:100%;">
+              <span class="news-date">2025.08.24</span>
+              <p class="news-text">車両情報を 8 件更新！</p>
+            </div>
+            <div class="news-item flex-shrink-0" style="min-width:100%;">
+              <span class="news-date">2025.08.23</span>
+              <p class="news-text">特選車を3台ピックアップ中！</p>
+            </div>
           </div>
         </div>
 
@@ -699,17 +701,17 @@
                 <div class="commons-image">
                   {{-- 7日以内のNEW+日付を表示し、7日外の日付のみ表示します --}}
                   @if (!empty($vehicle['created_at']))
-                    @php
-                    $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
-                    $isRecent = $createdDate->gt(\Carbon\Carbon::now()->subDays(7));
-                    @endphp
-                    
-                    <div class="new-badge {{ $isRecent ? 'with-new' : 'date-only' }}">
-                      @if ($isRecent)
-                      <span class="new-text">NEW</span>
-                      @endif
-                      <span class="new-date">{{ $createdDate->format('n/j') }}</span>
-                    </div>
+                  @php
+                  $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
+                  $isRecent = $createdDate->gt(\Carbon\Carbon::now()->subDays(7));
+                  @endphp
+
+                  <div class="new-badge {{ $isRecent ? 'with-new' : 'date-only' }}">
+                    @if ($isRecent)
+                    <span class="new-text">NEW</span>
+                    @endif
+                    <span class="new-date">{{ $createdDate->format('n/j') }}</span>
+                  </div>
                   @endif
                   <img src="{{ $mainImage ?? asset('assets/img/test.png') }}" alt="" loading="lazy">
                 </div>
@@ -816,13 +818,13 @@
                 <div class="commons-image">
                   {{-- 閲覧履歴は日付のみ表示 --}}
                   @if (!empty($vehicle['created_at']))
-                    @php
-                    $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
-                    @endphp
-                    
-                    <div class="new-badge date-only">
-                      <span class="new-date">{{ $createdDate->format('n/j') }}</span>
-                    </div>
+                  @php
+                  $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
+                  @endphp
+
+                  <div class="new-badge date-only">
+                    <span class="new-date">{{ $createdDate->format('n/j') }}</span>
+                  </div>
                   @endif
                   <img src="{{ $mainImage ?? asset('assets/img/test.png') }}" alt="" loading="lazy">
                 </div>
@@ -934,14 +936,14 @@
                 <div class="commons-image">
                   {{-- おすすめ車両は「おすすめ」ラベル付きで表示 --}}
                   @if (!empty($vehicle['created_at']))
-                    @php
-                    $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
-                    @endphp
-                    
-                    <div class="new-badge with-new">
-                      <span class="new-text">おすすめ</span>
-                      <span class="new-date">{{ $createdDate->format('n/j') }}</span>
-                    </div>
+                  @php
+                  $createdDate = \Carbon\Carbon::parse($vehicle['created_at']);
+                  @endphp
+
+                  <div class="new-badge with-new">
+                    <span class="new-text">おすすめ</span>
+                    <span class="new-date">{{ $createdDate->format('n/j') }}</span>
+                  </div>
                   @endif
                   <img src="{{ $mainImage ?? asset('assets/img/test.png') }}" alt="" loading="lazy">
                 </div>
@@ -1153,30 +1155,108 @@
   overlay.addEventListener('click', closeModal);
 
 
-
-  // お知らせスライダー
+// ===== News Slider (stable copy-paste) =====
+(() => {
   const slider = document.getElementById('news-slider');
+  if (!slider) return;
+
+  // 実アイテム取得
+  const originals = Array.from(slider.querySelectorAll('.news-item'));
+  const totalReal = originals.length;
+
+  // 2枚未満ならスライド不要
+  if (totalReal < 2) {
+    slider.style.transition = 'none';
+    slider.style.transform = 'translateX(0)';
+    window.nextSlide = () => {};
+    window.prevSlide = () => {};
+    return;
+  }
+
+  // 先頭/末尾クローンを追加
+  const firstClone = originals[0].cloneNode(true);
+  const lastClone  = originals[totalReal - 1].cloneNode(true);
+  slider.insertBefore(lastClone, slider.firstChild); // 先頭に末尾クローン
+  slider.appendChild(firstClone);                    // 末尾に先頭クローン
+
+  // クローン込みのリストと幅固定（安全策）
   const items = slider.querySelectorAll('.news-item');
-  const total = items.length;
-  let index = 0;
+  items.forEach(el => el.style.flex = '0 0 100%');
 
-  function updateSlidePosition() {
-    slider.style.transform = `translateX(-${index * 100}%)`;
+  const step = 100; // 1枚=100%
+  let index = 1;     // 実スライド1枚目から開始
+  let timer = null;  // setInterval用
+  let isAnimating = false; // アニメ中ガード
+
+  function setTransform(withTransition = true) {
+    slider.style.transition = withTransition ? 'transform 0.5s ease' : 'none';
+    slider.style.transform = `translateX(-${index * step}%)`;
   }
 
-  function nextSlide() {
-    index = (index + 1) % total;
-    updateSlidePosition();
+  // 初期配置（スナップ）
+  setTransform(false);
+
+  function goTo(i) {
+    if (isAnimating) return; // アニメ中は弾く
+    isAnimating = true;
+    index = i;
+    setTransform(true);
   }
 
-  function prevSlide() {
-    index = (index - 1 + total) % total;
-    updateSlidePosition();
-  }
+  // 内部用：公開関数名と分離（無限再帰防止）
+  function moveNext() { goTo(index + 1); }
+  function movePrev() { goTo(index - 1); }
+
+  // 端に到達したら“本物”へ瞬時にスナップ
+  slider.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'transform') return;
+
+    // 右端（先頭クローン）にいる → 実先頭へスナップ
+    if (index === items.length - 1) {
+      index = 1;
+      setTransform(false);   // アニメ無しで瞬間移動
+      // reflowしてスタイル確定（念のため）
+      // eslint-disable-next-line no-unused-expressions
+      slider.offsetHeight;
+    }
+
+    // 左端（末尾クローン）にいる → 実末尾へスナップ
+    if (index === 0) {
+      index = items.length - 2;
+      setTransform(false);
+      // eslint-disable-next-line no-unused-expressions
+      slider.offsetHeight;
+    }
+
+    // このトランジションは完了
+    isAnimating = false;
+  });
 
   // 自動スライド
-  setInterval(nextSlide, 5000);
+  function startAuto() {
+    stopAuto();
+    timer = setInterval(() => {
+      if (!isAnimating) moveNext();
+    }, 5000);
+  }
+  function stopAuto() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+  startAuto();
 
+  // タブ非表示中は一時停止（復帰時に再開）
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAuto();
+    else startAuto();
+  });
+
+  // 手動操作（HTMLの onclick から呼ばれる）
+  window.nextSlide = () => { stopAuto(); if (!isAnimating) moveNext(); startAuto(); };
+  window.prevSlide = () => { stopAuto(); if (!isAnimating) movePrev(); startAuto(); };
+})();
 
   // セクション：メーカー検索・ボディタイプ検索
   document.addEventListener("DOMContentLoaded", function() {

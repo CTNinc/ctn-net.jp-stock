@@ -20,7 +20,7 @@
   margin: 0 auto;
 }
 .header-logo img {
-  height: 34px;
+  height: 28px;
 }
 .header-logo {
   max-width: 127px;
@@ -45,7 +45,7 @@
   padding-bottom: 12px;
   color: #000;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 12px;
   text-decoration: none;
   transition: color 0.3s;
 }

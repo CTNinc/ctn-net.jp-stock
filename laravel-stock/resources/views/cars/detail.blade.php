@@ -216,7 +216,8 @@
               @endphp
               <p><span class="detail-item">住所</span>：{{ $fullAddress ?: 'お問い合わせください' }}</p>
               <p><span class="detail-item">定休日</span>：お問い合わせください</p>
-              <a href="{{ route('inquiry.create', ['vehicle_id' => $vehicle['id'], 'shop_name' => $shopName]) }}">在庫確認・見積り依頼</a>
+              <a href="{{ route('inquiry.create', ['vehicle_id' => $vehicle['id'], 'shop_name' => $shopName]) }}">
+                在庫確認・見積り依頼</a>
               @else
               <p class="shop-name">店舗情報取得中</p>
               <p><span class="detail-item">住所</span>：お問い合わせください</p>

@@ -6,7 +6,7 @@
 {{ Breadcrumbs::render('cars.maker', $makerId) }}
 
 <link rel="stylesheet" href="{{ asset('assets/css/maker-models.css') }}">
-<link rel="stylesheet" href="{{('/assets/css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
 
 
 
@@ -61,7 +61,29 @@
 
   </div>
 
+
 </div>
+      <!-- ★CTN車販売について -->
+    <section class="about-section">
+        <div class="inner_pt2">
+            <div class="about__content">
+                <div class="about__image">
+                    <img src="{{ asset('assets/img/test.png') }}" alt="CTN車販売サービスロゴ">
+                </div>
+                <div class="about__text">
+                    <h3>CTN中古車検索について</h3>
+                    <p>
+                       CTN中古車検索は、「できるだけ安く、でもちゃんと選びたい」そんな方にぴったりの中古車検索サイトです。トヨタ・日産・ホンダなどの人気国産車から、輸入車まで幅広く掲載中。価格にこだわりながら、安心して選べるクルマをご紹介しています。 SUV、軽自動車、ミニバン、セダンなどボディタイプからの絞り込みも簡単。さらに、自社ローンや、修理・メンテナンスに関する情報も掲載しており、購入後も安心のサポート体制を整えています。 初めてのクルマ選びにも、買い替えにも、お得に探せるCTN中古車検索をぜひご活用ください！
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- ページ最上部へスクロール -->
+        <a href="#" class="pagetop">
+            PAGETOP
+            <img src="{{ asset('assets/img/arrow-up-white.svg') }}" alt="">
+        </a>
+    </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
