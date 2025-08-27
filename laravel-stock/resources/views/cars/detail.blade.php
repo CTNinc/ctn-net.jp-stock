@@ -342,8 +342,6 @@
         </h3>
         <div class="set-info-section-border"></div>
       </div>
-      <!-- 安全装備 -->
-      <h4 class="car-set-info-heading">安全装備</h4>
       @php
       $safetyEquipments = [
       '36' => 'パワステ',
@@ -357,12 +355,26 @@
       '70' => 'キーレスエントリー'
       ];
       @endphp
+      <!-- 安全装備 -->
+      <h4 class="car-set-info-heading">
+        安全装備
+        @php
+        $availableCount = 0;
+        foreach ($safetyEquipments as $equipId => $equipName) {
+            if (isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId])) {
+                $availableCount++;
+            }
+        }
+        @endphp
+        <span class="equipment-count">({{ $availableCount }}/{{ count($safetyEquipments) }})</span>
+      </h4>
       <div class="car-set-info-flex continued">
         @foreach ($safetyEquipments as $equipId => $equipName)
         @php
+        // 機器が存在する場合は有効と表示されます。存在しない場合は無効と表示されます。
         $isAvailable = isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId]);
         @endphp
-        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}">
+        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}" title="{{ $isAvailable ? '装備あり' : '装備なし' }}">
           {{ $equipName }}
         </div>
         @endforeach
@@ -371,8 +383,6 @@
 
 
 
-      <!-- 快適装置 -->
-      <h4 class="car-set-info-heading">快適装置</h4>
       @php
       $comfortEquipments = [
       '33' => 'エアコン',
@@ -386,18 +396,30 @@
       '66' => 'パワーシート'
       ];
       @endphp
+      <!-- 快適装置 -->
+      <h4 class="car-set-info-heading">
+        快適装置
+        @php
+        $availableCount = 0;
+        foreach ($comfortEquipments as $equipId => $equipName) {
+            if (isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId])) {
+                $availableCount++;
+            }
+        }
+        @endphp
+        <span class="equipment-count">({{ $availableCount }}/{{ count($comfortEquipments) }})</span>
+      </h4>
       <div class="car-set-info-flex continued">
         @foreach ($comfortEquipments as $equipId => $equipName)
         @php
+        // 機器が存在する場合は有効と表示されます。存在しない場合は無効と表示されます。
         $isAvailable = isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId]);
         @endphp
-        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}">
+        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}" title="{{ $isAvailable ? '装備あり' : '装備なし' }}">
           {{ $equipName }}
         </div>
         @endforeach
       </div>
-      <!-- インテリア -->
-      <h4 class="car-set-info-heading">インテリア</h4>
       @php
       $interiorEquipments = [
       '24' => '禁煙車',
@@ -405,18 +427,30 @@
       '74' => 'メーカー保証'
       ];
       @endphp
+      <!-- インテリア -->
+      <h4 class="car-set-info-heading">
+        インテリア
+        @php
+        $availableCount = 0;
+        foreach ($interiorEquipments as $equipId => $equipName) {
+            if (isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId])) {
+                $availableCount++;
+            }
+        }
+        @endphp
+        <span class="equipment-count">({{ $availableCount }}/{{ count($interiorEquipments) }})</span>
+      </h4>
       <div class="car-set-info-flex continued">
         @foreach ($interiorEquipments as $equipId => $equipName)
         @php
+        // 機器が存在する場合は有効と表示されます。存在しない場合は無効と表示されます。
         $isAvailable = isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId]);
         @endphp
-        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}">
+        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}" title="{{ $isAvailable ? '装備あり' : '装備なし' }}">
           {{ $equipName }}
         </div>
         @endforeach
       </div>
-      <!-- エクステリア -->
-      <h4 class="car-set-info-heading">エクステリア</h4>
       @php
       $exteriorEquipments = [
       '28' => 'ディーゼル車',
@@ -424,12 +458,26 @@
       '58' => 'マフラー'
       ];
       @endphp
+      <!-- エクステリア -->
+      <h4 class="car-set-info-heading">
+        エクステリア
+        @php
+        $availableCount = 0;
+        foreach ($exteriorEquipments as $equipId => $equipName) {
+            if (isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId])) {
+                $availableCount++;
+            }
+        }
+        @endphp
+        <span class="equipment-count">({{ $availableCount }}/{{ count($exteriorEquipments) }})</span>
+      </h4>
       <div class="car-set-info-flex continued">
         @foreach ($exteriorEquipments as $equipId => $equipName)
         @php
+        // 機器が存在する場合は有効と表示されます。存在しない場合は無効と表示されます。
         $isAvailable = isset($vehicle['equipments']) && isset($vehicle['equipments'][$equipId]);
         @endphp
-        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}">
+        <div class="set-info-item{{ $isAvailable ? '' : ' disabled' }}" title="{{ $isAvailable ? '装備あり' : '装備なし' }}">
           {{ $equipName }}
         </div>
         @endforeach

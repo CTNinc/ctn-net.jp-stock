@@ -328,6 +328,15 @@
     font-weight: 400;
     color: #000;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.equipment-count {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
 }
 .car-set-info-grid {
     display: grid;
@@ -408,14 +417,30 @@
     white-space: nowrap;
     font-size: 16px;
     text-align: center;
+    border: 1px solid #ea5413;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
     flex: 1 1 25%;
     max-width: 50%;
     min-width: 25%;
 }
+
+.set-info-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(234, 84, 19, 0.3);
+}
 .set-info-item.disabled {
-    background-color: #eeeeee;
-    color: #cccccc;
+    background-color: #f5f5f5;
+    color: #999999;
+    border: 1px solid #e0e0e0;
+    opacity: 0.7;
+    cursor: default;
+}
+
+.set-info-item.disabled:hover {
+    transform: none;
+    box-shadow: none;
 }
      .price-box.pc {
         display: flex;

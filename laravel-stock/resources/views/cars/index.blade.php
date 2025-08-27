@@ -148,21 +148,21 @@
 	                    <select name="mileage_min" id="mileage-min" class="mileage-min w90">
 	                      <option value="" {{ request('year_min') == '' ? 'selected' : '' }}>下限なし</option>
 	                      <option value="5000" {{ request('mileage_min') == '5000' ? 'selected' : '' }}>5000Km</option>
-	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>1万Km</option>
-	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>2万Km</option>
-	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>3万Km</option>
-	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>4万Km</option>
-	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>5万Km</option>
-	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>6万Km</option>
-	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>7万Km</option>
-	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>8万Km</option>
-	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>9万Km</option>
-	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>10万Km</option>
-	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>11万Km</option>
-	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>12万Km</option>
-	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>13万Km</option>
-	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>14万Km</option>
-	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>15万Km</option>
+	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>10000Km</option>
+	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>20000Km</option>
+	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>30000Km</option>
+	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>40000Km</option>
+	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>50000Km</option>
+	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>60000Km</option>
+	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>70000Km</option>
+	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>80000Km</option>
+	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>90000Km</option>
+	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>100000Km</option>
+	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>110000Km</option>
+	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>120000Km</option>
+	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>130000Km</option>
+	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>140000Km</option>
+	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>150000Km</option>
 	                    </select>
 	                  </div>
 	                  <span>〜</span>
@@ -170,21 +170,21 @@
 	                    <select name="mileage_max" id="mileage-max" class="mileage-max w90">
 	                      <option value="" {{ request('year_max') == '' ? 'selected' : '' }}>上限なし</option>
 	                      <option value="5000" {{ request('mileage_min') == '5000' ? 'selected' : '' }}>5000Km</option>
-	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>1万Km</option>
-	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>2万Km</option>
-	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>3万Km</option>
-	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>4万Km</option>
-	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>5万Km</option>
-	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>6万Km</option>
-	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>7万Km</option>
-	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>8万Km</option>
-	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>9万Km</option>
-	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>10万Km</option>
-	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>11万Km</option>
-	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>12万Km</option>
-	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>13万Km</option>
-	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>14万Km</option>
-	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>15万Km</option>
+	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>10000Km</option>
+	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>20000Km</option>
+	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>30000Km</option>
+	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>40000Km</option>
+	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>50000Km</option>
+	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>60000Km</option>
+	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>70000Km</option>
+	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>80000Km</option>
+	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>90000Km</option>
+	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>100000Km</option>
+	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>110000Km</option>
+	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>120000Km</option>
+	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>130000Km</option>
+	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>140000Km</option>
+	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>150000Km</option>
 	                    </select>
 	                  </div>
 	                </div>
@@ -200,7 +200,7 @@
 	                      <option value="300000" {{ request('body_price_min') == '300000' ? 'selected' : '' }}>30万円</option>
 	                      <option value="400000" {{ request('body_price_min') == '400000' ? 'selected' : '' }}>40万円</option>
 	                      <option value="500000" {{ request('body_price_min') == '500000' ? 'selected' : '' }}>50万円</option>
-	                      <option value="600000" {{ request('body_price_min') == '600000' ? 'selected' : '' }}    >60万円</option>
+	                      <option value="600000" {{ request('body_price_min') == '600000' ? 'selected' : '' }}>60万円</option>
 	                      <option value="700000" {{ request('body_price_min') == '700000' ? 'selected' : '' }}>70万円</option>
 	                      <option value="800000" {{ request('body_price_min') == '800000' ? 'selected' : '' }}>80万円</option>
 	                      <option value="900000" {{ request('body_price_min') == '900000' ? 'selected' : '' }}>90万円</option>
@@ -588,21 +588,21 @@
 	                    <select name="mileage_min" id="mileage-min" class="mileage-min w90">
 	                      <option value="" {{ request('year_min') == '' ? 'selected' : '' }}>下限なし</option>
 	                      <option value="5000" {{ request('mileage_min') == '5000' ? 'selected' : '' }}>5000Km</option>
-	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>1万Km</option>
-	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>2万Km</option>
-	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>3万Km</option>
-	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>4万Km</option>
-	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>5万Km</option>
-	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>6万Km</option>
-	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>7万Km</option>
-	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>8万Km</option>
-	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>9万Km</option>
-	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>10万Km</option>
-	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>11万Km</option>
-	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>12万Km</option>
-	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>13万Km</option>
-	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>14万Km</option>
-	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>15万Km</option>
+	                      <option value="10000" {{ request('mileage_min') == '10000' ? 'selected' : '' }}>10000Km</option>
+	                      <option value="20000" {{ request('mileage_min') == '20000' ? 'selected' : '' }}>20000Km</option>
+	                      <option value="30000" {{ request('mileage_min') == '30000' ? 'selected' : '' }}>30000Km</option>
+	                      <option value="40000" {{ request('mileage_min') == '40000' ? 'selected' : '' }}>40000Km</option>
+	                      <option value="50000" {{ request('mileage_min') == '50000' ? 'selected' : '' }}>50000Km</option>
+	                      <option value="60000" {{ request('mileage_min') == '60000' ? 'selected' : '' }}>60000Km</option>
+	                      <option value="70000" {{ request('mileage_min') == '70000' ? 'selected' : '' }}>70000Km</option>
+	                      <option value="80000" {{ request('mileage_min') == '80000' ? 'selected' : '' }}>80000Km</option>
+	                      <option value="90000" {{ request('mileage_min') == '90000' ? 'selected' : '' }}>90000Km</option>
+	                      <option value="100000" {{ request('mileage_min') == '100000' ? 'selected' : '' }}>100000Km</option>
+	                      <option value="110000" {{ request('mileage_min') == '110000' ? 'selected' : '' }}>110000Km</option>
+	                      <option value="120000" {{ request('mileage_min') == '120000' ? 'selected' : '' }}>120000Km</option>
+	                      <option value="130000" {{ request('mileage_min') == '130000' ? 'selected' : '' }}>130000Km</option>
+	                      <option value="140000" {{ request('mileage_min') == '140000' ? 'selected' : '' }}>140000Km</option>
+	                      <option value="150000" {{ request('mileage_min') == '150000' ? 'selected' : '' }}>150000Km</option>
 	                    </select>
 	                  </div>
 	                  <span>〜</span>
@@ -610,21 +610,21 @@
 	                    <select name="mileage_max" id="mileage-max" class="mileage-max w90">
 	                      <option value="" {{ request('year_max') == '' ? 'selected' : '' }}>上限なし</option>
 	                      <option value="5000" {{ request('mileage_max') == '5000' ? 'selected' : '' }}>5000Km</option>
-	                      <option value="10000" {{ request('mileage_max') == '10000' ? 'selected' : '' }}>1万Km</option>
-	                      <option value="20000" {{ request('mileage_max') == '20000' ? 'selected' : '' }}>2万Km</option>
-	                      <option value="30000" {{ request('mileage_max') == '30000' ? 'selected' : '' }}>3万Km</option>
-	                      <option value="40000" {{ request('mileage_max') == '40000' ? 'selected' : '' }}>4万Km</option>
-	                      <option value="50000" {{ request('mileage_max') == '50000' ? 'selected' : '' }}>5万Km</option>
-	                      <option value="60000" {{ request('mileage_max') == '60000' ? 'selected' : '' }}>6万Km</option>
-	                      <option value="70000" {{ request('mileage_max') == '70000' ? 'selected' : '' }}>7万Km</option>
-	                      <option value="80000" {{ request('mileage_max') == '80000' ? 'selected' : '' }}>8万Km</option>
-	                      <option value="90000" {{ request('mileage_max') == '90000' ? 'selected' : '' }}>9万Km</option>
-	                      <option value="100000" {{ request('mileage_max') == '100000' ? 'selected' : '' }}>10万Km</option>
-	                      <option value="110000" {{ request('mileage_max') == '110000' ? 'selected' : '' }}>11万Km</option>
-	                      <option value="120000" {{ request('mileage_max') == '120000' ? 'selected' : '' }}>12万Km</option>
-	                      <option value="130000" {{ request('mileage_max') == '130000' ? 'selected' : '' }}>13万Km</option>
-	                      <option value="140000" {{ request('mileage_max') == '140000' ? 'selected' : '' }}>14万Km</option>
-	                      <option value="150000" {{ request('mileage_max') == '150000' ? 'selected' : '' }}>15万Km</option>
+	                      <option value="10000" {{ request('mileage_max') == '10000' ? 'selected' : '' }}>10000Km</option>
+	                      <option value="20000" {{ request('mileage_max') == '20000' ? 'selected' : '' }}>20000Km</option>
+	                      <option value="30000" {{ request('mileage_max') == '30000' ? 'selected' : '' }}>30000Km</option>
+	                      <option value="40000" {{ request('mileage_max') == '40000' ? 'selected' : '' }}>40000Km</option>
+	                      <option value="50000" {{ request('mileage_max') == '50000' ? 'selected' : '' }}>50000Km</option>
+	                      <option value="60000" {{ request('mileage_max') == '60000' ? 'selected' : '' }}>60000Km</option>
+	                      <option value="70000" {{ request('mileage_max') == '70000' ? 'selected' : '' }}>70000Km</option>
+	                      <option value="80000" {{ request('mileage_max') == '80000' ? 'selected' : '' }}>80000Km</option>
+	                      <option value="90000" {{ request('mileage_max') == '90000' ? 'selected' : '' }}>90000Km</option>
+	                      <option value="100000" {{ request('mileage_max') == '100000' ? 'selected' : '' }}>100000Km</option>
+	                      <option value="110000" {{ request('mileage_max') == '110000' ? 'selected' : '' }}>110000Km</option>
+	                      <option value="120000" {{ request('mileage_max') == '120000' ? 'selected' : '' }}>120000Km</option>
+	                      <option value="130000" {{ request('mileage_max') == '130000' ? 'selected' : '' }}>130000Km</option>
+	                      <option value="140000" {{ request('mileage_max') == '140000' ? 'selected' : '' }}>140000Km</option>
+	                      <option value="150000" {{ request('mileage_max') == '150000' ? 'selected' : '' }}>150000Km</option>
 	                    </select>
 	                  </div>
 	                </div>
